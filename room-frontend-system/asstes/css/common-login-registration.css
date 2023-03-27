@@ -1,3 +1,6 @@
+* {
+    font-size: 14px;
+}
 
 .main {
     width: 30vw;
@@ -26,16 +29,20 @@
     margin-top: 4px;
     display: none;
 }
-.form-group .err-medium{
+
+.form-group .err-medium {
     color: rgb(6, 122, 255);
 }
-.form-group .err-strong{
+
+.form-group .err-strong {
     color: green;
 }
-.form-group label{
+
+.form-group label {
     margin-bottom: 0;
 
 }
+
 .btn-size {
     width: 100%;
 }

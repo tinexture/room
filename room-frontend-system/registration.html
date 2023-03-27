@@ -44,19 +44,59 @@
                     </div>
                     <div class="form-group profile-picture">
                         <label class="py-1" for="upload-profile-picture">Upload Profile Picture <br> <img
-                                src="asstes/images/profile picture.png" alt=""> </label>
+                                src="asstes/images/profile picture.png" id="preview" alt=""> </label>
                         <input type="file" class="form-control" id="upload-profile-picture"
-                            placeholder="Confirm Password">
+                            placeholder="Confirm Password" onchange="encodeImageFileAsURL(this)">
                         <p class="error" id="password-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
                         <select name="Gender" class="drop-down" id="gender"> <br>
+                            <option value="selected">Select..</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
                         <p class="error" id="gender-err"></p>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- Address Information -->
+            <div class="tab">
+                <fieldset>
+                    <legend>Address Information :</legend>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address </label>
+                        <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Your Address"> -->
+                        <textarea placeholder="Enter General Address" name="general-address" id="general-address"
+                            cols="" rows="3"></textarea>
+                        <p class="error" id="address-err"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Country </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Your Country Name">
+                        <p class="error" id="country-err"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">State </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Your State Name">
+                        <p class="error" id="state-err"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">City </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Your City Name">
+                        <p class="error" id="city-err"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Pin Code </label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter Your City Pin Code">
+                        <p class="error" id="city-err"></p>
                     </div>
                 </fieldset>
             </div>
@@ -89,30 +129,6 @@
                     </div>
                 </fieldset>
             </div>
-            <!-- Address Information -->
-            <div class="tab">
-                <fieldset>
-                    <legend>Address Information :</legend>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Address </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your Address">
-                        <p class="error" id="address-err"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">City </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your City Name">
-                        <p class="error" id="city-err"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Pin Code </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your City Pin Code">
-                        <p class="error" id="city-err"></p>
-                    </div>
-                </fieldset>
-            </div>
             <div style="overflow:auto;">
                 <div>
                     <button class="btn btn-primary" style="float: left;" type="button" id="prevBtn"
@@ -128,6 +144,8 @@
 
         </form>
     </div>
+
+
 
     <script src="asstes/js/registration.js"></script>
 
