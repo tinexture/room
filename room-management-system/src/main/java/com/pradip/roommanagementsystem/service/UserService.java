@@ -1,14 +1,20 @@
 package com.pradip.roommanagementsystem.service;
 
-import com.pradip.roommanagementsystem.dto.ApiResponse;
-import com.pradip.roommanagementsystem.dto.ERoles;
-import com.pradip.roommanagementsystem.dto.UserDTO;
+import com.pradip.roommanagementsystem.dto.*;
 import com.pradip.roommanagementsystem.entity.Role;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.exception.ResourceNotFoundException;
+import com.pradip.roommanagementsystem.exception.UnauthorizedException;
 import com.pradip.roommanagementsystem.repository.UserRepository;
+import com.pradip.roommanagementsystem.security.CustomUserDetails;
+import com.pradip.roommanagementsystem.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -25,6 +31,13 @@ public class UserService {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtUtils jwtUtils;
+
 
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
 
@@ -64,7 +77,7 @@ public class UserService {
 
     public ApiResponse<UserDTO> createUser(User user) {
         Role role=new Role();
-        role.setName(ERoles.USER);
+        role.setName(ERoles.ROLE_USER);
         role.setUser(user);
         user.setRoles(Collections.singletonList(role));
         user.setPassword(encoder.encode(user.getPassword()));
@@ -73,5 +86,18 @@ public class UserService {
 
     public ApiResponse<UserDTO> updateUser(User user) {
         return new ApiResponse<UserDTO>(HttpStatus.OK.value(), "User updated successfully.",mapper.map(userRepository.save(user), UserDTO.class));
+    }
+
+    public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
+        try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+            String jwt = jwtUtils.generateToken(principal);
+            return ResponseEntity.ok(new JwtResponse(jwt));
+        }catch (Exception e){
+            throw new UnauthorizedException(e.getMessage());
+        }
     }
 }

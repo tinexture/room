@@ -55,13 +55,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/user/authenticate"))
-                        .permitAll()
-                        .anyRequest().authenticated()
-                );
+                .authorizeHttpRequests(requests ->
+                        requests.requestMatchers(new AntPathRequestMatcher("/user/authenticate")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyAuthority("ROLE_USER","ROLE_ADMIN","ROLE_SUPER_ADMIN")
+                        .anyRequest().authenticated()).
+                exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).authenticationEntryPoint(unauthorizedHandler);
 
         http.authenticationProvider(authenticationProvider());
 
