@@ -11,7 +11,7 @@
 	<groupId>com.pradip</groupId>
 	<artifactId>room-management-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>room-management-system</name>
 	<description>This project to manage all thing that related to our room like daily expenses and other things</description>
 	<properties>

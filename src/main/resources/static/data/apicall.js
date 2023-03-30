@@ -22,7 +22,7 @@ function authenticate() {
     redirect: 'follow'
   };
   
-  fetch("http://localhost:9090/user/authenticate", requestOptions)
+  fetch("http://localhost:9090/authenticate", requestOptions)
     .then(response => response.json())
     .then(response => {
       window.localStorage.setItem("token",'Bearer '+response.jwt);

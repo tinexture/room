@@ -10,7 +10,9 @@ com/pradip/roommanagementsystem/RoomManagementSystemApplication.class
 com/pradip/roommanagementsystem/controller/UserController.class
 com/pradip/roommanagementsystem/service/UserService.class
 com/pradip/roommanagementsystem/dto/ApiResponse.class
+com/pradip/roommanagementsystem/dto/RegisterUser.class
 com/pradip/roommanagementsystem/repository/UserRepository.class
+com/pradip/roommanagementsystem/entity/Address.class
 com/pradip/roommanagementsystem/entity/User.class
 com/pradip/roommanagementsystem/exception/ForbiddenException.class
 com/pradip/roommanagementsystem/exception/BaseException.class
