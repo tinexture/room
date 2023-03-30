@@ -11,5 +11,5 @@ RUN mvn clean package -Pprod -DskipTests
 FROM openjdk:11-jdk-slim
 COPY --from=build /target/room-management-system.war room-management-system.war
 # ENV PORT=8080
-EXPOSE 9090
+EXPOSE 9999
 ENTRYPOINT ["java","-jar","room-management-system.war"]
