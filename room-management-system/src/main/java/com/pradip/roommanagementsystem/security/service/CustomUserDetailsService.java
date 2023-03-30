@@ -1,7 +1,8 @@
-package com.pradip.roommanagementsystem.security;
+package com.pradip.roommanagementsystem.security.service;
 
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.repository.UserRepository;
+import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -6,8 +6,9 @@ import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.exception.ResourceNotFoundException;
 import com.pradip.roommanagementsystem.exception.UnauthorizedException;
 import com.pradip.roommanagementsystem.repository.UserRepository;
-import com.pradip.roommanagementsystem.security.CustomUserDetails;
-import com.pradip.roommanagementsystem.security.JwtUtils;
+import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
+import com.pradip.roommanagementsystem.security.dto.LoginRequest;
+import com.pradip.roommanagementsystem.security.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Service
@@ -44,7 +46,7 @@ public class UserService {
     public ApiResponse<List<?>> getAllUsers(String projectionName) throws ClassNotFoundException {
         List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
         if(allBy == null || allBy.isEmpty()){
-            throw new ResourceNotFoundException("Users are not available in system.");
+            throw  new EntityNotFoundException("User not found.");
         }
         return new ApiResponse<List<?>>(HttpStatus.OK.value(), "Users fetched successfully.", allBy);
     }
@@ -55,7 +57,7 @@ public class UserService {
             return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
         }
         else {
-            return new ApiResponse<Object>(HttpStatus.NOT_FOUND.value(), "User not found.");
+            throw  new EntityNotFoundException("User not found.");
         }
     }
 
@@ -71,7 +73,7 @@ public class UserService {
             return new ApiResponse<Object>(HttpStatus.OK.value(), "User deleted successfully.",userById.get());
         }
         else {
-            return new ApiResponse<Object>(HttpStatus.NOT_FOUND.value(), "User not found.");
+            throw  new EntityNotFoundException("User not found.");
         }
     }
 

@@ -1,4 +1,4 @@
-package com.pradip.roommanagementsystem.security;
+package com.pradip.roommanagementsystem.security.config;
 
 import java.io.IOException;
 import java.util.Date;
@@ -7,11 +7,14 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.pradip.roommanagementsystem.exception.ErrorResponse;
+import com.pradip.roommanagementsystem.security.service.CustomUserDetailsService;
+import com.pradip.roommanagementsystem.security.util.JwtUtils;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +25,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
@@ -31,6 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+    private static  ObjectMapper objectMapper=new ObjectMapper();
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
@@ -47,13 +50,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtUtils.getUsernameFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
-                logger.error("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
-                logger.error("JWT Token has expired");
+                String errorMsg = "JWT Token has expired";
+                response=addErrorToResponse(response,errorMsg,HttpStatus.UNAUTHORIZED.value());
+                return;
             }
             catch (Exception e){
-                logger.error("Invalid JWT token");
+                String errorMsg = "Invalid JWT token";
+                response=addErrorToResponse(response,errorMsg,HttpStatus.UNAUTHORIZED.value());
+                return;
             }
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
@@ -87,6 +92,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
             response.getWriter().write(jsonResponse);
         }
+    }
+
+    public static HttpServletResponse addErrorToResponse(HttpServletResponse response, String errorMsg, int httpStatus) throws IOException {
+        logger.error(errorMsg);
+        response.setStatus(httpStatus);
+        response.setContentType("application/json");
+        response.getWriter().write(objectMapper.writeValueAsString(
+                new ErrorResponse(httpStatus,errorMsg)));
+        return response;
     }
 
 //    @Override

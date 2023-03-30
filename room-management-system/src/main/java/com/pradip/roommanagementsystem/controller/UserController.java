@@ -1,14 +1,11 @@
 package com.pradip.roommanagementsystem.controller;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
-import com.pradip.roommanagementsystem.dto.LoginRequest;
 import com.pradip.roommanagementsystem.dto.UserDTO;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        return userService.authenticateUser(loginRequest);
-    }
     @GetMapping
     public ResponseEntity<ApiResponse<List<?>>> getAlUsers(@RequestParam("projection") String projectionName) throws ClassNotFoundException {
         return ResponseEntity.ok(userService.getAllUsers(projectionName));

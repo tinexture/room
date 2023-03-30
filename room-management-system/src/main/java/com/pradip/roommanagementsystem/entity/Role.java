@@ -2,7 +2,7 @@ package com.pradip.roommanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pradip.roommanagementsystem.dto.ERoles;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 @Entity

@@ -1,11 +1,10 @@
-package com.pradip.roommanagementsystem.security;
+package com.pradip.roommanagementsystem.security.config;
 
 import java.io.IOException;
 
-import com.pradip.roommanagementsystem.exception.UnauthorizedException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,6 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
         logger.error("Unauthorized error: {}", authException.getMessage());
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        AuthTokenFilter.addErrorToResponse(response,"Unauthorized : "+authException.getMessage(),401);
     }
 }
