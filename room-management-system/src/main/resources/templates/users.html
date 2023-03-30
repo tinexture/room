@@ -20,7 +20,7 @@
 <!--</head>-->
 <!--<body>-->
 <head th:replace="fragments :: html_head"/>
-<body>
+<body onload="getUsers()">
 <section th:replace="fragments :: html_header"/>
 <section class="content">
   <div class="container">
@@ -52,44 +52,6 @@
 
 </section>
 
-<script>
-  window.onload = createUser()
-  function createUser() {
-      const table = $('.table');
-
-      // Make an AJAX request to the "get all users" API endpoint
-      $.ajax({
-        url: 'http://localhost:9090/user?projection=UserProjectionDTO',
-        method: 'GET',
-        success: function(response) {
-          console.log(response.data);
-          if(response.statusCode == 200 && response.data != ''){
-            // Iterate over the response data and add rows to the table
-            response.data.forEach(user => {
-              const row = `
-                <tr>
-                  <td>${user.id}</td>
-                  <td>${user.username}</td>
-                  <td>${user.fullName}</td>
-                  <td>${user.email}</td>
-                  <td>${user.enabled}</td>
-                  <td>${user.locked}</td>
-                </tr>
-              `;
-              table.append(row);
-            });
-          }else{
-            $('#msg').text(response.message);
-            table.hide();
-          }
-        },
-        error: function(error) {
-          $('.table').hide();
-          $('.card-body').append("<div class='alert alert-danger' id='msg'><strong>Danger! </strong>"+error.responseJSON.message+"</div>");
-          console.error('Error:c', error);
-        }
-      });
-    }
-  </script>
+<script src="/data/apicall.js"></script>
 </body>
 </html>

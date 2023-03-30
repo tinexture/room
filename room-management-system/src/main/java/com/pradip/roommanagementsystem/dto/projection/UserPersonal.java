@@ -1,7 +1,7 @@
 package com.pradip.roommanagementsystem.dto.projection;
 
 public interface UserPersonal {
-    String getUsername();
+    Long getId();
     String getEmail();
     String getFullName();
 }

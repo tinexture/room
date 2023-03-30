@@ -1,7 +1,7 @@
 package com.pradip.roommanagementsystem.dto;
 
 public enum ERoles {
-    USER,
-    ADMIN,
-    SUPER_ADMIN
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_SUPER_ADMIN
 }

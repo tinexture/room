@@ -1,4 +1,4 @@
-package com.pradip.roommanagementsystem.security;
+package com.pradip.roommanagementsystem.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

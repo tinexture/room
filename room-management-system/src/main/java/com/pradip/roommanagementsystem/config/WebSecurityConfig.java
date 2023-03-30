@@ -1,5 +1,9 @@
-package com.pradip.roommanagementsystem.security;
+package com.pradip.roommanagementsystem.config;
 
+import com.pradip.roommanagementsystem.security.config.AuthEntryPointJwt;
+import com.pradip.roommanagementsystem.security.config.AuthTokenFilter;
+import com.pradip.roommanagementsystem.security.config.CustomAccessDeniedHandler;
+import com.pradip.roommanagementsystem.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,18 +59,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/user/authenticate"))
-                        .permitAll()
-                        .anyRequest().authenticated()
-                );
+                .authorizeHttpRequests()
+                    .antMatchers("/authenticate","/data/**","/","/create-user","/delete-user","/favicon.ico").permitAll()
+                    .antMatchers("/user/**").hasAnyAuthority(
+                            "ROLE_USER","ROLE_ADMIN","ROLE_SUPER_ADMIN").anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).authenticationEntryPoint(unauthorizedHandler);
 
         http.authenticationProvider(authenticationProvider());
-
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }
