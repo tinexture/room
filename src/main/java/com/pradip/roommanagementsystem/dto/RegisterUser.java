@@ -3,9 +3,11 @@ package com.pradip.roommanagementsystem.dto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pradip.roommanagementsystem.entity.Address;
 import com.pradip.roommanagementsystem.entity.Role;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Data
+@Component
 public class RegisterUser {
     @Email
     private String email;
@@ -27,11 +30,13 @@ public class RegisterUser {
     private String lastName;
     @NotBlank
     private String gender;
+
     private String profilePhoto;
 
-    private List<Address> addresses;
+    private Address address;
 
     private List<Role> roles;
 
+    @NotBlank
     private String password;
 }

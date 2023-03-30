@@ -1,9 +1,11 @@
 package com.pradip.roommanagementsystem.controller;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
+import com.pradip.roommanagementsystem.dto.RegisterUser;
 import com.pradip.roommanagementsystem.dto.UserDTO;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.service.UserService;
+import com.pradip.roommanagementsystem.util.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -30,12 +33,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<UserDTO>> createUser(@RequestBody User user){
+    public ResponseEntity<ApiResponse<RegisterUser>> createUser(@RequestBody RegisterUser user){
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponse<UserDTO>> updateUser(@RequestBody User user){
+    public ResponseEntity<ApiResponse<RegisterUser>> updateUser(@RequestBody User user){
         return ResponseEntity.ok(userService.updateUser(user));
     }
 

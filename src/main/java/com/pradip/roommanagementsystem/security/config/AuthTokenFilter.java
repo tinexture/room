@@ -24,6 +24,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -79,18 +80,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 }
             }
             chain.doFilter(request, response);
-        }catch (AccessDeniedException ex){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            Map<String, Object> objectBody = new LinkedHashMap<>();
-            objectBody.put("timestamp", new Date());
-            objectBody.put("error", ex.getMessage());
-            objectBody.put("status", HttpStatus.FORBIDDEN.value());
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            String jsonResponse = objectMapper.writeValueAsString(objectBody);
-
-            response.getWriter().write(jsonResponse);
+        }catch (AccessDeniedException  | UsernameNotFoundException  ex){
+            addErrorToResponse(response,"Unauthorized: "+ex.getMessage(),401);
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            Map<String, Object> objectBody = new LinkedHashMap<>();
+//            objectBody.put("timestamp", new Date());
+//            objectBody.put("error", ex.getMessage());
+//            objectBody.put("status", HttpStatus.FORBIDDEN.value());
+//
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//            String jsonResponse = objectMapper.writeValueAsString(objectBody);
+//
+//            response.getWriter().write(jsonResponse);
         }
     }
 

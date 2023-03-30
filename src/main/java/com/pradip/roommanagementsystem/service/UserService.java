@@ -3,12 +3,12 @@ package com.pradip.roommanagementsystem.service;
 import com.pradip.roommanagementsystem.dto.*;
 import com.pradip.roommanagementsystem.entity.Role;
 import com.pradip.roommanagementsystem.entity.User;
-import com.pradip.roommanagementsystem.exception.ResourceNotFoundException;
 import com.pradip.roommanagementsystem.exception.UnauthorizedException;
 import com.pradip.roommanagementsystem.repository.UserRepository;
 import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
 import com.pradip.roommanagementsystem.security.dto.LoginRequest;
 import com.pradip.roommanagementsystem.security.util.JwtUtils;
+import com.pradip.roommanagementsystem.util.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,6 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private ModelMapper mapper;
-
-    @Autowired
     PasswordEncoder encoder;
 
     @Autowired
@@ -39,6 +36,9 @@ public class UserService {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    private GeneralUtil util;
 
 
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
@@ -77,17 +77,18 @@ public class UserService {
         }
     }
 
-    public ApiResponse<UserDTO> createUser(User user) {
+    public ApiResponse<RegisterUser> createUser(RegisterUser registerUser) {
+        User user = util.convertObject(registerUser, User.class);
         Role role=new Role();
         role.setName(ERoles.ROLE_USER);
         role.setUser(user);
         user.setRoles(Collections.singletonList(role));
         user.setPassword(encoder.encode(user.getPassword()));
-        return new ApiResponse<UserDTO>(HttpStatus.OK.value(), "User saved successfully.",mapper.map(userRepository.save(user), UserDTO.class));
+        return new ApiResponse<RegisterUser>(HttpStatus.OK.value(), "User saved successfully.",util.convertObject(userRepository.save(user), RegisterUser.class));
     }
 
-    public ApiResponse<UserDTO> updateUser(User user) {
-        return new ApiResponse<UserDTO>(HttpStatus.OK.value(), "User updated successfully.",mapper.map(userRepository.save(user), UserDTO.class));
+    public ApiResponse<RegisterUser> updateUser(User user) {
+        return new ApiResponse<RegisterUser>(HttpStatus.OK.value(), "User updated successfully.",util.convertObject(userRepository.save(user), RegisterUser.class));
     }
 
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {

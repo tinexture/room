@@ -8,9 +8,9 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
-            <h5 class="card-title text-center mb-5 fw-light fs-5">Delete Realm</h5>
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Delete User</h5>
               <div th:if="${users.isEmpty()}" class="alert alert-danger"><strong>Danger! </strong>Users are not available in this realm</div>
-              <form th:if="${!users.isEmpty()}">
+              <form th:if="${!users.isEmpty()}" id="delete-form">
 <!--                <div class="form-floating">-->
 <!--                  <input type="text" class="form-control" name="userId"  id="floatingInput" placeholder="User ID" required="required" />-->
 <!--                  <label for="floatingInput">User ID</label>-->
@@ -39,6 +39,11 @@
       </div>
     </div>
   </div>
+
+  <script>
+  const myDiv = document.getElementById("delete-form");
+                myDiv.style.display = "none";
+</script>
   <script src="/data/apicall.js"></script>
 </body>
 </html>

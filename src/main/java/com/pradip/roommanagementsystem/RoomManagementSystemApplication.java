@@ -13,8 +13,4 @@ public class RoomManagementSystemApplication {
 		SpringApplication.run(RoomManagementSystemApplication.class, args);
 	}
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
 }

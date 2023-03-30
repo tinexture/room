@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         CustomUserDetails customUserDetails =new CustomUserDetails();
         customUserDetails.setId(user.getId());
         customUserDetails.setUsername(user.getEmail());
-        customUserDetails.setFullName(user.getFullName());
+        customUserDetails.setFullName(user.getFirstName()+" "+user.getLastName());
         customUserDetails.setAuthorities(authorities);
         customUserDetails.setLocked(user.isLocked());
         customUserDetails.setEnabled(user.isEnabled());

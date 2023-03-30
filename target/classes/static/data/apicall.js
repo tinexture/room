@@ -1,19 +1,55 @@
 
-tokenCheck();  
+window.onload = function() {
+  if(window.localStorage.getItem("token") == null){
+      showData("none");
+      var username = prompt("Please enter your email : ");
+      if(username != null && username != ""){
+        var password = prompt("Please enter your password : ");
+        if(password != null && password != ""){
+            var authStatus=authenticate(username,password);
+            console.log(authStatus+""+window.localStorage.getItem("token"));
+            if(authStatus == true && window.localStorage.getItem("token") != null){
+                showData("block");
+            }
+            else{
+              console.log("Error to generate token");
+            }
+        }
+      }
+  }else{
+    showData("block");
+  }
+};
+function showData(displayType){
+var reqPath=window.location.href.split("/")[3];
+    if(reqPath == ""){
+        const myDiv = document.getElementById("user-table");
+        myDiv.style.display = displayType;
+        getUsers();
+    }
+    else if(reqPath =="delete-user"){
+        const myDiv = document.getElementById("delete-form");
+        myDiv.style.display = displayType;
+    }
+    else if(reqPath =="create-user"){
+        const myDiv = document.getElementById("formId");
+        myDiv.style.display = displayType;
+    }
+}
 
-const apiUrl = 'http://localhost:9090/user';
+const apiUrl = 'http://localhost:8080';
 
 
 
-function authenticate() {
-
+function authenticate(email,password) {
+  if(window.localStorage.getItem("token") != null){
+    return true;
+  }
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
-
   var raw = JSON.stringify({
-    "email": "pradip@inexture.com",
-    "password": "123"
+    "email": email,
+    "password": password
   });
   var requestOptions = {
     method: 'POST',
@@ -22,25 +58,16 @@ function authenticate() {
     redirect: 'follow'
   };
   
-  fetch("http://localhost:9090/authenticate", requestOptions)
+  fetch(apiUrl+"/authenticate", requestOptions)
     .then(response => response.json())
     .then(response => {
       window.localStorage.setItem("token",'Bearer '+response.jwt);
       alert("Token generated");
-    return true
     }) 
     .catch(error => {
       alert(error);
-      return false;
     });
-}
-
-function tokenCheck(){
-  var localToken=window.localStorage.getItem("token");
-  if(!localToken){
-    return authenticate();
-  }
-  return true;
+    return true;
 }
 
 function logout(){
@@ -50,7 +77,6 @@ function logout(){
 
 
 function getUsers() {
-  if(tokenCheck()){
     var myHeaders = new Headers();
     myHeaders.append("Authorization", window.localStorage.getItem("token"));
     
@@ -60,7 +86,7 @@ function getUsers() {
       redirect: 'follow'
     };
     const table = $('.table');
-    fetch("http://localhost:9090/user?projection=UserProjectionDTO", requestOptions)
+    fetch(apiUrl+"/user?projection=UserProjectionDTO", requestOptions)
       .then(result => result.json())
       .then(response => {
         if(response.statusCode == 200 && response.data != ''){
@@ -87,14 +113,9 @@ function getUsers() {
         alert(error);
         console.log('error', error)
       });
-  }  
-  else{
-    alert("Users is not fetch due to token");
-  }
 }
 
 function createUser() {
-    tokenCheck()
     var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", window.localStorage.getItem("token"));
@@ -114,7 +135,7 @@ function createUser() {
     redirect: 'follow'
     };
 
-    fetch('http://localhost:9090/user', requestOptions)
+    fetch(apiUrl+"/user", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -132,7 +153,6 @@ function takeConformation(){
 }
 
 function deleteUser() {
-    tokenCheck()
     var myHeaders = new Headers();
     myHeaders.append("Authorization", window.localStorage.getItem("token"));
     var requestOptions = {
@@ -141,7 +161,7 @@ function deleteUser() {
       redirect: 'follow'
     };
     var userId=document.getElementById("userId").value;
-    fetch("http://localhost:9090/user/"+userId, requestOptions)
+    fetch(apiUrl+"/user/"+userId, requestOptions)
       .then(response => response.json())
       .then(result => {
         alert(result.message);
