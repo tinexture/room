@@ -14,11 +14,11 @@ import java.util.List;
 public class UIController {
 //    @Autowired
 //    private UserService userService;
-//
-//    @GetMapping("/")
-//    public String getIndex(){
-//        return "index.html";
-//    }
+
+    @GetMapping("/")
+    public String getIndex(){
+        return "redirect:/index.html";
+    }
 
     @GetMapping("/keep-alive")
     @ResponseBody
