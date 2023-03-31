@@ -13,6 +13,7 @@ body {
 
 .profile-picture>label>img {
   height: 70px;
+  width: 70px;
   border: 1px solid rgb(114, 113, 113);
   border-radius: 50%;
 }
@@ -73,7 +74,7 @@ input.invalid {
 .drop-down {
   display: block;
   width: 100%;
-  padding: 9px 8px;
+  padding:  8px;
   border-color: #9f9e9e;
   border-radius: 4px;
 }
@@ -84,4 +85,14 @@ input.invalid {
   border-radius: 4px;
   width: 100%;
   margin: 0;
+}
+.fild{
+  padding: 0;
+}
+#pin-code-fild{
+  padding: 7px;
+}
+.tab>fieldset>legend{
+  font-size: 16px;
+  text-decoration: underline;
 }
