@@ -47,7 +47,7 @@ function encodeImageFileAsURL(element) {
         var base64String = event.target.result;
 
         // Do something with the Base64 string (e.g., send it to a server via AJAX)
-        console.log(base64String);
+        // console.log(base64String);
     };
 
     // Read the selected file as a Data URL (which will give us a Base64 string)
@@ -55,5 +55,29 @@ function encodeImageFileAsURL(element) {
     $("#preview").attr("src ", base64String);
 }
 
+// Set Preview Image function
+var preview = $('#preview');
+var profile_picture = $('#upload-profile-picture');
+profile_picture.change(function (event) {
+    if (event.target.files.length == 0) {
+        return 0;
+    }
+    var tempURL = URL.createObjectURL(event.target.files[0]);
+    preview.attr('src', tempURL);
+});
 
 
+// function reqListener() {
+//     console.log(this.responseText);
+//   }
+  
+//   const req = new XMLHttpRequest();
+//   req.addEventListener("load", reqListener);
+//   req.open("POST", "https://roomates.onrender.com/authenticate");
+//   req.send();
+function loginapi() {
+  fetch('https://roomates.onrender.com/authenticate')
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+}

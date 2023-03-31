@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/registration.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="asstes/js/dynamicAdress.js"></script>
+    <script src="asstes/js/comman.js"></script>
 </head>
 
 <body>
     <div class="main">
-        <form id="regForm" action="#">
+        <form id="regForm" action="#" onsubmit="return logInValidation(event)">
 
             <div class="form-group md-3">
                 <h2 class="text-center">Registration </h2>
@@ -32,21 +34,21 @@
                     <legend>Personal Details</legend>
                     <div class="form-group">
                         <label for="exampleInputEmail1">First Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        <input type="text" class="form-control" id="fname" aria-describedby="emailHelp"
                             placeholder="Enter First Name">
                         <p class="error" id="fname-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Last Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        <input type="text" class="form-control" id="lname" aria-describedby="emailHelp"
                             placeholder="Enter Last Name">
                         <p class="error" id="lname-err"></p>
                     </div>
                     <div class="form-group profile-picture">
                         <label class="py-1" for="upload-profile-picture">Upload Profile Picture <br> <img
-                                src="asstes/images/profile picture.png" id="preview" alt=""> </label>
-                        <input type="file" class="form-control" id="upload-profile-picture"
-                            placeholder="Confirm Password" onchange="encodeImageFileAsURL(this)">
+                                src="asstes/images/profile picture.png" id="preview"> </label>
+                        <input type="file" accept="image/*" class="form-control" id="upload-profile-picture"
+                            placeholder="Confirm Password">
                         <p class="error" id="password-err"></p>
                     </div>
                     <div class="form-group">
@@ -65,7 +67,7 @@
             <!-- Address Information -->
             <div class="tab">
                 <fieldset>
-                    <legend>Address Information :</legend>
+                    <legend>Address Information</legend>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address </label>
                         <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -74,57 +76,79 @@
                             cols="" rows="3"></textarea>
                         <p class="error" id="address-err"></p>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Country </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your Country Name">
-                        <p class="error" id="country-err"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">State </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your State Name">
-                        <p class="error" id="state-err"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">City </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your City Name">
-                        <p class="error" id="city-err"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Pin Code </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter Your City Pin Code">
-                        <p class="error" id="city-err"></p>
-                    </div>
+                    <div class="fild container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 pr-sm-1">
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <!-- <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter Country"> -->
+                                    <select class="drop-down" name="country" id="country">
+
+                                    </select>
+                                    <p class="error" id="country-err"></p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 pl-sm-1">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">State</label>
+                                    <!-- <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter State"> -->
+                                    <select class="drop-down" name="state" id="state">
+                                        <option value="state">State</option>
+                                    </select>
+                                    <p class="error" id="state-err"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-6 pr-sm-1">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">City</label>
+                                    <!-- <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Enter City"> -->
+                                    <select class="drop-down" name="city" id="city">
+                                        <option value="city">City</option>
+                                    </select>
+                                    <p class="error" id="city-err"></p>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 pl-sm-1">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Pin Code</label>
+                                    <input type="number" class="form-control drop-down" id="pin-code-fild"
+                                        aria-describedby="emailHelp" placeholder="Enter Pin Code">
+                                    <p class="error" id="city-err"></p>
+                                </div>
+                            </div>
+                        </div>
                 </fieldset>
             </div>
             <!-- Login Information -->
             <div class="tab">
                 <fieldset>
-                    <legend>Login Information :</legend>
+                    <legend>Login Information</legend>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile Number</label>
-                        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        <input type="number" class="form-control" id="mobile-fild" aria-describedby="emailHelp"
                             placeholder="Enter Last Name">
                         <p class="error" id="mobile-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email Address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        <input type="email" class="form-control" id="email-fild" aria-describedby="emailHelp"
                             placeholder="Enter Email">
                         <p class="error" id="email-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input type="password" class="form-control" id="password-fild" placeholder="Password">
                         <p class="error" id="password-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Confirm Password">
+                        <input type="password" class="form-control" id="cpassword-fild" placeholder="Confirm Password">
                         <p class="error" id="cpassword-err"></p>
                     </div>
                 </fieldset>
@@ -133,21 +157,87 @@
                 <div>
                     <button class="btn btn-primary" style="float: left;" type="button" id="prevBtn"
                         onclick="nextPrev(-1)">Previous</button>
-                    <button class="btn btn-primary" style="float: right;" type="button" id="nextBtn"
+                    <button type="submit" class="btn btn-primary" style="float: right;" type="button" id="nextBtn"
                         onclick="nextPrev(1)">Next</button>
-                    <button class="btn btn-primary" style="float: right;" type="button" id="submit">Submit</button>
+                    <!-- <button class="btn btn-primary" style="float: right;" type="button" id="submit">Submit</button> -->
                 </div>
             </div>
             <div class="form-group text-center pt-3 ">
-                <a href="index.html" id="create-new">Already have an account?</a>
+                <a href="login.html" id="create-new">Already have an account?</a>
             </div>
 
         </form>
     </div>
 
-
-
     <script src="asstes/js/registration.js"></script>
+
+    <script>
+
+        var fname = $('#fname');
+        var lname = $('#lname');
+        var profile_picture = $('#upload-profile-picture');
+        var gender = $('#gender');
+        var gaddress = $('#general-address');
+        var country = $('#country');
+        var state = $('#state');
+        var city = $('#city');
+        var pincode = $('#pin-code-fild');
+        var mobile = $('#mobile-fild');
+        var email = $('#email-fild');
+        var password = $('#password-fild');
+        var cpassword = $('#cpassword-fild');
+
+        function logInValidation(event) {
+            if (nameVlid(fname.val(), $("#fname-err")) != true &&
+                nameVlid(lname.val(), $("#lname-err")) != true &&
+                profile_picture_validation(profile_picture.val(), $("#password-err")) != true
+                ) {
+                event.preventDefault();
+                return false;
+            }
+            return true;
+        }
+
+
+        function nameVlid(name, errEle) {
+            var nameRetn = true;
+            if (name.trim() == "") {
+                errEle.text(
+                    " Please fill this field");
+                nameRetn = false;
+            }
+            else {
+                errEle.text(
+                    "");
+                errEle.style = "display:none";
+                nameRetn = true;
+            }
+            if (nameRetn != true) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+       
+        function profile_picture_validation(picture, errEle) {
+            var nameRetn = true;
+            if (picture == "") {
+                errEle.text(
+                    " Please Upload Profile Photo");
+                nameRetn = false;
+            }
+            else {
+                errEle.style = "display:none";
+                nameRetn = true;
+            }
+            if (nameRetn != true) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    </script>
 
 </body>
 

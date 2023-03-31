@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Edu+NSW+ACT+Foundation&family=Open+Sans:ital,wght@0,300;0,500;1,300;1,400&family=Oswald:wght@200;300;400;500;700&family=Rubik&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="asstes/css/common.css">
+    <link rel="stylesheet" href="asstes/css/common-login-registration.css">
+    <link rel="stylesheet" href="asstes/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="asstes/js/comman.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <form>
+            <div class="form-group md-3">
+                <h2 class="text-center">Login</h2>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email Address</label>
+                <input type="email" class="form-control" id="email" value="chavdapradip48@gmail.com" aria-describedby="emailHelp"
+                    placeholder="Enter Email">
+                <p class="error error-" id="email-err">Email Error</p>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <p class="error " id="password-err">Email Error</p>
+            </div>
+
+            <button type="button" onclick="callLoginApi()" class="btn btn-primary btn-size" id="sub">Submit</button>
+            <div class="form-group text-center pt-3 ">
+                <a href="forgote-pass.html" id="forgot-password">Forgot Password ?</a><br>
+                <a href="registration.html" id="create-new">Create New Account</a>
+            </div>
+        </form>
+    </div>
+    <script>
+
+        function callLoginApi() {
+            var emailEle = $("#email").val();
+
+            const apiUrl = 'https://roomates.onrender.com/authenticate';
+
+            const requestData = {
+                email:  $("#email").val(),
+                password: $("#password").val()
+            };
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            };
+
+            fetch(apiUrl, options)
+                .then(response => {
+                    if(response.status == "200"){
+                        alert("User authencated successfully");
+                    }
+                    else{
+                        alert("User not authencated"+response.status);
+                        return;
+                    }
+
+                })
+                .then(response => response.json())
+                .then(response => {
+                    window.localStorage.setItem("token",test.jwt);
+                    alert("User authencated successfully");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("User not authencated ");
+                });
+
+
+
+
+        }
+    </script>
+    <!-- <script>
+        // var email =document.getElementById('#email').value;
+        let inputValue = document.getElementById("email").value;
+        function print_email(email,password){
+            console.log(email);
+            console.log(password);
+        }
+
+    </script> -->
+</body>
+
+</html>
