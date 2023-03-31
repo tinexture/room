@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="asstes/css/common.css">
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="asstes/js/comman.js"></script>
 </head>
 
 <body>
@@ -26,23 +28,78 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input type="email" class="form-control" id="email" value="chavdapradip48@gmail.com" aria-describedby="emailHelp"
                     placeholder="Enter Email">
                 <p class="error error-" id="email-err">Email Error</p>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" class="form-control" id="password" placeholder="Password">
                 <p class="error " id="password-err">Email Error</p>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-size">Submit</button>
+            <button type="button" onclick="callLoginApi()" class="btn btn-primary btn-size" id="sub">Submit</button>
             <div class="form-group text-center pt-3 ">
                 <a href="forgote-pass.html" id="forgot-password">Forgot Password ?</a><br>
                 <a href="registration.html" id="create-new">Create New Account</a>
             </div>
         </form>
     </div>
+    <script>
+
+        function callLoginApi() {
+            var emailEle = $("#email").val();
+
+            const apiUrl = 'https://roomates.onrender.com/authenticate';
+
+            const requestData = {
+                email:  $("#email").val(),
+                password: $("#password").val()
+            };
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            };
+
+            fetch(apiUrl, options)
+                .then(response => {
+                    if(response.status == "200"){
+                        alert("User authencated successfully");
+                    }
+                    else{
+                        alert("User not authencated"+response.status);
+                        return;
+                    }
+
+                })
+                .then(response => response.json())
+                .then(response => {
+                    window.localStorage.setItem("token",test.jwt);
+                    alert("User authencated successfully");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("User not authencated ");
+                });
+
+
+
+
+        }
+    </script>
+    <!-- <script>
+        // var email =document.getElementById('#email').value;
+        let inputValue = document.getElementById("email").value;
+        function print_email(email,password){
+            console.log(email);
+            console.log(password);
+        }
+
+    </script> -->
 </body>
 
 </html>
