@@ -15,23 +15,23 @@ import java.util.List;
 @Controller
 @CrossOrigin(origins = "*")
 public class UIController {
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/")
-    public String getIndex(){
-        return "users";
-    }
-
-    @GetMapping("/create-user")
-    public String createuserPage(){
-        return "user_create";
-    }
-
-    @GetMapping("/delete-user")
-    public String deleteUserPage(Model model) throws ClassNotFoundException {
-        List<UserPersonal> userPersonal = (List<UserPersonal>) userService.getAllUsers("UserPersonal").getData();
-        model.addAttribute("users",userPersonal);
-        return "user_delete";
-    }
+//    @Autowired
+//    private UserService userService;
+//
+//    @GetMapping("/")
+//    public String getIndex(){
+//        return "users";
+//    }
+//
+//    @GetMapping("/create-user")
+//    public String createuserPage(){
+//        return "user_create";
+//    }
+//
+//    @GetMapping("/delete-user")
+//    public String deleteUserPage(Model model) throws ClassNotFoundException {
+//        List<UserPersonal> userPersonal = (List<UserPersonal>) userService.getAllUsers("UserPersonal").getData();
+//        model.addAttribute("users",userPersonal);
+//        return "user_delete";
+//    }
 }
