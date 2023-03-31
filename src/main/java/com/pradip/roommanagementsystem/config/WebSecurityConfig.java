@@ -62,7 +62,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
 //                .antMatchers("**").permitAll()
-                    .antMatchers("/authenticate","/data/**","/**.html","/asstes/**","/").permitAll()//"/","/create-user","/user","/delete-user","/favicon.ico").permitAll()
+                    .antMatchers("/authenticate","/data/**","/**.html","/asstes/**","/","/keep-alive").permitAll()//"/","/create-user","/user","/delete-user","/favicon.ico").permitAll()
                     .antMatchers("/user/**").hasAnyAuthority(
                             "ROLE_USER","ROLE_ADMIN","ROLE_SUPER_ADMIN").anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).authenticationEntryPoint(unauthorizedHandler);
