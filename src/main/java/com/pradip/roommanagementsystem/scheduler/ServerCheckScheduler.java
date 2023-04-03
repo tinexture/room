@@ -14,7 +14,7 @@ public class ServerCheckScheduler {
     @Value("${server.url}")
     private String apiUrl; // replace with your API URL
 
-    @Scheduled(fixedDelay = 1680000) // 28 minutes in milliseconds
+    @Scheduled(fixedDelay = 600000) // 10 minutes in milliseconds
     public void callApi() {
         String response = restTemplate.getForObject(apiUrl+"/keep-alive", String.class);
         System.out.println("\n=> Response from server : "+response+".");
