@@ -18,88 +18,56 @@
     <link rel="stylesheet" href="asstes/css/login.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <script src="asstes/js/comman.js"></script>
+    <script src="asstes/js/validationFunction.js"></script>
 </head>
 
 <body>
     <div class="main">
-        <form>
+        <form id="loginForm" action="#">
             <div class="form-group md-3">
                 <h2 class="text-center">Login</h2>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="email" value="chavdapradip48@gmail.com" aria-describedby="emailHelp"
-                    placeholder="Enter Email">
-                <p class="error error-" id="email-err">Email Error</p>
+                <input type="email" class="form-control" id="email" value="sandip@gmail.com" aria-describedby="emailHelp"
+                    placeholder="Enter Email" name="email">
+                <p class="error" id="email-err">Email Error</p>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                 <p class="error " id="password-err">Email Error</p>
             </div>
 
-            <button type="button" onclick="callLoginApi()" class="btn btn-primary btn-size" id="sub">Submit</button>
+            <button type="button" class="btn btn-primary btn-size" id="sub">Submit</button>
+            <!-- onclick="callLoginApi()" -->
             <div class="form-group text-center pt-3 ">
                 <a href="forgote-pass.html" id="forgot-password">Forgot Password ?</a><br>
                 <a href="registration.html" id="create-new">Create New Account</a>
             </div>
         </form>
     </div>
+  
     <script>
+        $('#sub').click(function () {
+            var email = $('#email').val();
+            var pass = $('#password').val();
 
-        function callLoginApi() {
-            var emailEle = $("#email").val();
+            var email_error = $('#email-err');
+            var pass_error = $('#password-err');
 
-            const apiUrl = 'https://roomates.onrender.com/authenticate';
+            var email_ret = emailVlid(email, email_error);
+            // var pass_ret = passVlid(pass, pass_error);
 
-            const requestData = {
-                email:  $("#email").val(),
-                password: $("#password").val()
-            };
-
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            };
-
-            fetch(apiUrl, options)
-                .then(response => {
-                    if(response.status == "200"){
-                        alert("User authencated successfully");
-                    }
-                    else{
-                        alert("User not authencated"+response.status);
-                        return;
-                    }
-
-                })
-                .then(response => response.json())
-                .then(response => {
-                    window.localStorage.setItem("token",test.jwt);
-                    alert("User authencated successfully");
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("User not authencated ");
-                });
-
-
-
-
-        }
+            // if (email_ret && pass_ret) {
+            if (email_ret ) {
+                console.log("form is valid");
+                // $('#loginForm').submit();
+                callLoginApi();
+            }
+        });
+      
     </script>
-    <!-- <script>
-        // var email =document.getElementById('#email').value;
-        let inputValue = document.getElementById("email").value;
-        function print_email(email,password){
-            console.log(email);
-            console.log(password);
-        }
-
-    </script> -->
 </body>
 
 </html>
