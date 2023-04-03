@@ -17,7 +17,7 @@ public class UIController {
 
     @GetMapping("/")
     public String getIndex(){
-        return "redirect:/index.html";
+        return "redirect:/login.html";
     }
 
     @GetMapping("/keep-alive")
