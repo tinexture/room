@@ -29,13 +29,13 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="email" value="sandip@gmail.com" aria-describedby="emailHelp"
+                <input type="email" class="form-control" id="email" value="sandip2908@gmail.com"  aria-describedby="emailHelp"
                     placeholder="Enter Email" name="email">
                 <p class="error" id="email-err">Email Error</p>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                <input type="password" class="form-control" value="Sandip123@" id="password" placeholder="Password" name="password">
                 <p class="error " id="password-err">Email Error</p>
             </div>
 
@@ -48,26 +48,7 @@
         </form>
     </div>
   
-    <script>
-        $('#sub').click(function () {
-            var email = $('#email').val();
-            var pass = $('#password').val();
-
-            var email_error = $('#email-err');
-            var pass_error = $('#password-err');
-
-            var email_ret = emailVlid(email, email_error);
-            // var pass_ret = passVlid(pass, pass_error);
-
-            // if (email_ret && pass_ret) {
-            if (email_ret ) {
-                console.log("form is valid");
-                // $('#loginForm').submit();
-                callLoginApi();
-            }
-        });
-      
-    </script>
+    <script src="asstes/js/login.js"></script>
 </body>
 
 </html>
