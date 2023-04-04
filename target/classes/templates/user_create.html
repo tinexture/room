@@ -1,0 +1,51 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head"/>
+
+<body onload="">
+    <section th:replace="fragments :: html_header"/>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card border-0 shadow rounded-3 my-5">
+                        <div class="card-body p-4 p-sm-5">
+                            <h5 class="card-title text-center mb-5 fw-light fs-5">Create User</h5>
+                            <form action="/user" method="POST" id="formId">
+<!--                                <div class="form-floating">-->
+<!--                                    <input type="text" class="form-control" name="username" id="username"  placeholder="Username" required>-->
+<!--                                    <label>Username</label>-->
+<!--                                </div>-->
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="fullName" id="fullName"  placeholder="Full Name" required>
+                                    <label>Full Name</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" name="email" id="email"  placeholder="Email" required  value="Default Value">
+                                    <label>Email</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" name="password" id="password"  placeholder="password" required>
+                                    <label>password</label>
+                                </div>
+                                <br><br>
+                                <div class="d-grid">
+                                    <input class="btn btn-primary text-uppercase fw-bold" type="button" onclick="createUser()" value="Create" />
+                                </div>
+                                <input type="hidden" id="enabled" name="enabled" value="true">
+                                <input type="hidden" id="locked" name="locked" value="false">
+                                <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+  const myDiv = document.getElementById("formId");
+                myDiv.style.display = "none";
+console.log("sdfsd"+$("#email").val());
+</script>
+<script src="/data/apicall.js"></script>
+</body>
+</html>

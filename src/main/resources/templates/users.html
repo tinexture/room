@@ -1,0 +1,40 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head"/>
+<body>
+<section th:replace="fragments :: html_header"/>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-8 p-sm-8">
+            <br><h3 class="card-title text-center mb-5 fw-light fs-5">All Users</h3>
+            
+            <table class="table table-bordered table-striped table-hover" id="user-table">
+              <thead class="bg-primary">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Enabled</th>
+                <th scope="col">Locked</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<script>
+  const myDiv = document.getElementById("user-table");
+                myDiv.style.display = "none";
+</script>
+<script src="/data/apicall.js"></script>
+</body>
+</html>
