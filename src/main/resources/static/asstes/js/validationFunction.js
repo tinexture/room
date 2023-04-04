@@ -7,13 +7,13 @@ function emailVlid(emails, errEle) {
     }
     else if (emails.indexOf("@") <= 0) {
         errEle.css("display", "block");
-        errEle.text(" ** Invalid Email");
+        errEle.text(" Invalid Email");
         nameRetn = false;
     }
 
     else if (emails.charAt(emails.length - 4) != "." && emails.charAt(emails.length - 3) != ".") {
         errEle.css("display", "block");
-        errEle.text(" ** Invalid Email");
+        errEle.text(" Invalid Email");
         nameRetn = false;
     }
     else {
