@@ -1,7 +1,0 @@
-
-h
-java:S3305 "RInject this field value directly into "filterChain", the only method that uses it.(†€Ú³
-x
-java:S3305"]Inject this field value directly into "authenticationProvider", the only method that uses it.(×‡çşÿÿÿÿ
-v
-java:S1128"`Remove this unused import 'org.springframework.security.web.util.matcher.AntPathRequestMatcher'.(¼¸ö

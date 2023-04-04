@@ -1,6 +1,6 @@
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
-
+validateFields(1);
 $("#submit").css("display", "none");
 function showTab(n) {//0
     var allTabs = $(".tab");
@@ -27,6 +27,7 @@ function HideShow(element, value) {
 function nextPrev(n) {
     var allTabs = $(".tab");
     // If n == 1 then user clicked next button otherwise previous
+    validateFields(currentTab + 1);
     allTabs.eq(currentTab).css("display", "none");
     if (n == 1) {
         showTab(++currentTab);
@@ -34,6 +35,17 @@ function nextPrev(n) {
     else {
         showTab(--currentTab)
     }
+}
+
+function validateFields(stepNum) {
+    var currentStep = $("#step" + stepNum).children(".form-group ");
+    if (stepNum == 1) {
+        var fNameValue = currentStep.children("#fname").val();
+        var lNameValue = currentStep.children("#lname").val();
+
+        console.log(fNameValue + " " + lNameValue)
+    }
+    console.log();
 }
 
 function encodeImageFileAsURL(element) {
@@ -65,19 +77,3 @@ profile_picture.change(function (event) {
     var tempURL = URL.createObjectURL(event.target.files[0]);
     preview.attr('src', tempURL);
 });
-
-
-// function reqListener() {
-//     console.log(this.responseText);
-//   }
-  
-//   const req = new XMLHttpRequest();
-//   req.addEventListener("load", reqListener);
-//   req.open("POST", "https://roomates.onrender.com/authenticate");
-//   req.send();
-function loginapi() {
-  fetch('https://roomates.onrender.com/authenticate')
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-}

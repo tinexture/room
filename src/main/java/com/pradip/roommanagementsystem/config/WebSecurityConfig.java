@@ -7,6 +7,7 @@ import com.pradip.roommanagementsystem.security.service.CustomUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -63,7 +64,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests()
 //                .antMatchers("**").permitAll()
                     .antMatchers("/authenticate","/data/**","/**.html","/asstes/**","/","/keep-alive").permitAll()//"/","/create-user","/user","/delete-user","/favicon.ico").permitAll()
-                    .antMatchers("/user/**").hasAnyAuthority(
+                .antMatchers(HttpMethod.POST, "/user/**").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority(
                             "ROLE_USER","ROLE_ADMIN","ROLE_SUPER_ADMIN").anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).authenticationEntryPoint(unauthorizedHandler);
 

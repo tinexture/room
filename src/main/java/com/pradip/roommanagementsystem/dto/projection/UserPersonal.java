@@ -11,4 +11,5 @@ public interface UserPersonal {
     String getFirstName();
     String getLastName();
     String getMobile();
+    List<Role> getRoles();
 }

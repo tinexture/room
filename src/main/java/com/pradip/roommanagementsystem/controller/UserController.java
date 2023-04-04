@@ -2,10 +2,8 @@ package com.pradip.roommanagementsystem.controller;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
 import com.pradip.roommanagementsystem.dto.RegisterUser;
-import com.pradip.roommanagementsystem.dto.UserDTO;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.service.UserService;
-import com.pradip.roommanagementsystem.util.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getUserById(
+    public ResponseEntity<ApiResponse<Object>> getUserById(
             @RequestParam("projection") String projectionName,
             @PathVariable Long id) throws ClassNotFoundException {
         return ResponseEntity.ok(userService.getUserById(id, projectionName));

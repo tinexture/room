@@ -44,15 +44,18 @@ public class UserService {
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
 
     public ApiResponse<List<?>> getAllUsers(String projectionName) throws ClassNotFoundException {
-        List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
+        List<User> allBy = userRepository.findAll();
+        //        List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
         if(allBy == null || allBy.isEmpty()){
             throw  new EntityNotFoundException("User not found.");
         }
+
         return new ApiResponse<List<?>>(HttpStatus.OK.value(), "Users fetched successfully.", allBy);
     }
 
     public ApiResponse<Object> getUserById(Long id, String projectionName) throws ClassNotFoundException {
-        Optional<?> userById = userRepository.findById(id,getClassName(projectionName));
+//        Optional<?> userById = userRepository.findById(id,getClassName(projectionName));
+        Optional<?> userById=userRepository.findById(id);
         if(userById.isPresent()){
             return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
         }
