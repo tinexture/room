@@ -33,12 +33,12 @@ function userVlid(user, errEle) {
     var nameRetn = true;
     if (user == "") {
         errEle.css("display", "block");
-        errEle.text(" Please fill the username field");
+        errEle.text(" Please fill this field");
         nameRetn = false;
     }
     else if (user.length <= 3 || user.length > 20) {
         errEle.css("display", "block");
-        errEle.text(" Username lenght must be between 3 and 20");
+        errEle.text("lenght must be between 3 and 20");
         nameRetn = false;
     }
     else if (!isNaN(user)) {
@@ -46,6 +46,30 @@ function userVlid(user, errEle) {
         errEle.text(" only characters are allowed");
         nameRetn = false;
     } else {
+        errEle.css("display", "none");
+        errEle.text("");
+        nameRetn = true;
+    }
+    if (nameRetn != true) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function addressVlid(user, errEle) {
+    var nameRetn = true;
+    if (user == "") {
+        errEle.css("display", "block");
+        errEle.text("Please fill this field");
+        nameRetn = false;
+    }
+    else if (user.length <= 10 || user.length > 150) {
+        errEle.css("display", "block");
+        errEle.text("lenght must be between 10 and 150");
+        nameRetn = false;
+    }
+    else {
         errEle.css("display", "none");
         errEle.text("");
         nameRetn = true;
@@ -156,5 +180,42 @@ function numberVlid(mobileNumber, errEle) {
     }
 }
 
+function genderVlid(gender, errEle) {
+    var nameRetn = true;
+    if (gender == "selected" || gender == "") {
+        errEle.css("display", "block");
+        errEle.text("Please select gender ");
+        nameRetn = false;
+    }
+    else {
+        errEle.css("display", "none");
+        errEle.text("");
+        nameRetn = true;
+    }
+    if (nameRetn != true) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function profileVlid(picture, errEle) {
+    var nameRetn = true;
+    if (picture == null || picture == "") {
+        errEle.css("display", "block");
+        errEle.text("Please select profile picture");
+        nameRetn = false;
+    }
+    else {
+        errEle.css("display", "none");
+        errEle.text("");
+        nameRetn = true;
+    }
+    if (nameRetn != true) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 
