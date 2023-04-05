@@ -1,8 +1,10 @@
 package com.pradip.roommanagementsystem.service;
 
 import com.pradip.roommanagementsystem.dto.*;
+import com.pradip.roommanagementsystem.entity.Otp;
 import com.pradip.roommanagementsystem.entity.Role;
 import com.pradip.roommanagementsystem.entity.User;
+import com.pradip.roommanagementsystem.exception.EmailException;
 import com.pradip.roommanagementsystem.exception.UnauthorizedException;
 import com.pradip.roommanagementsystem.repository.UserRepository;
 import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
@@ -18,9 +20,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.*;
 
 @Service
@@ -63,7 +67,15 @@ public class UserService {
             throw  new EntityNotFoundException("User not found.");
         }
     }
-
+    public ApiResponse<Object> getUserByEmail(String email) {
+        Optional<User> userById=userRepository.findByEmail(email);
+        if(userById.isPresent()){
+            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
+        }
+        else {
+            throw  new EntityNotFoundException("User not found.");
+        }
+    }
     private Class<?> getClassName(String projectionName) throws ClassNotFoundException {
         return Class.forName(projectionPackage+""+projectionName);
     }
@@ -105,5 +117,36 @@ public class UserService {
         }catch (Exception e){
             throw new UnauthorizedException(e.getMessage());
         }
+    }
+
+    public ApiResponse<String> sendOtpToEmail(String email) throws MessagingException {
+        User userPersonal = (User) getUserByEmail(email).getData();
+        String otp = util.generateOtp();
+        if(util.sendOtp(email,userPersonal.getFirstName()+" "+userPersonal.getLastName(),otp)){
+            userPersonal.setOtp(new Otp(otp,false,userPersonal));
+            userRepository.save(userPersonal);
+        }
+        return new ApiResponse<String>(HttpStatus.OK.value(), "Otp sent sucessfully");
+    }
+
+    public ApiResponse<String> verifyOtpToEmail(String email, String otp) {
+        User user = (User) getUserByEmail(email).getData();
+        Otp otpDTO = user.getOtp();
+        if(otpDTO != null){
+            if(!otp.equals(otpDTO.getCode())){
+                throw new EmailException("Otp is invalid.");
+            }
+            // check otp to ensure it has not expired
+            Date todaysDate = new Date();
+            long timeLapse = todaysDate.getTime() - otpDTO.getCreatedAt().getTime();
+            // ensure the time lapse is not greater than 15 mins in milliseconds
+            if(timeLapse >= 900000) {
+                throw new EmailException("Otp expired");
+            }
+            otpDTO.setVerified(true);
+            user.setOtp(otpDTO);
+            userRepository.save(user);
+        }
+        return new ApiResponse<String>(HttpStatus.OK.value(), "Otp is verified");
     }
 }

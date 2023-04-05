@@ -25,18 +25,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Access Denied: " + ex.getMessage());
     }
+//
+//    @ExceptionHandler(value = ResourceNotFoundException.class)
+//    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
+//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+//    }
 
-    @ExceptionHandler(value = ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
+//    @ExceptionHandler(value = EntityNotFoundException.class)
+//    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
+//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+//        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+//    }
     @ExceptionHandler(value = InvalidInputException.class)
     public ResponseEntity<ErrorResponse> handleInvalidInputException(InvalidInputException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
@@ -61,11 +61,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
-
     @ExceptionHandler(value = InternalServerErrorException.class)
     public ResponseEntity<ErrorResponse> handleInternalServerErrorException(InternalServerErrorException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ErrorResponse> handleEmailException(EmailException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),  ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 //    @ExceptionHandler(Exception.class)
