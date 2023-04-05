@@ -1,0 +1,27 @@
+# Ignore Gradle build directories
+build/
+.gradle/
+
+# Ignore Maven build directories
+target/
+pom.xml
+mvnw
+mvnw.cmd
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.project
+
+# Ignore logs and other generated files
+logs/
+*.log
+*.log.*
+*.out
+*.pid
+*.war
+*.jar
+

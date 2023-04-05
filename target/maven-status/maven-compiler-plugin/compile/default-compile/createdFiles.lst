@@ -8,6 +8,7 @@ com/pradip/roommanagementsystem/service/UserService.class
 com/pradip/roommanagementsystem/dto/RegisterUser.class
 com/pradip/roommanagementsystem/repository/UserRepository.class
 com/pradip/roommanagementsystem/entity/Address.class
+com/pradip/roommanagementsystem/scheduler/ServerCheckScheduler.class
 com/pradip/roommanagementsystem/exception/ForbiddenException.class
 com/pradip/roommanagementsystem/exception/BaseException.class
 com/pradip/roommanagementsystem/dto/projection/UserProjectionDTO.class
@@ -19,6 +20,7 @@ com/pradip/roommanagementsystem/controller/UIController.class
 com/pradip/roommanagementsystem/exception/ResourceNotFoundException.class
 com/pradip/roommanagementsystem/dto/JwtResponse.class
 com/pradip/roommanagementsystem/security/config/AuthEntryPointJwt.class
+com/pradip/roommanagementsystem/util/GeneralUtil.class
 com/pradip/roommanagementsystem/RoomManagementSystemApplication.class
 com/pradip/roommanagementsystem/dto/ApiResponse.class
 com/pradip/roommanagementsystem/entity/User.class

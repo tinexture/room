@@ -25,8 +25,10 @@
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/security/config/CustomAccessDeniedHandler.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/dto/RegisterUser.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/security/dto/CustomUserDetails.java
+/home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/util/GeneralUtil.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/dto/projection/UserProjectionDTO.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/dto/ApiResponse.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/security/service/CustomUserDetailsService.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/security/config/AuthTokenFilter.java
 /home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/exception/ErrorResponse.java
+/home/root320/Desktop/Room_Project/src/main/java/com/pradip/roommanagementsystem/scheduler/ServerCheckScheduler.java
