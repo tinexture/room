@@ -135,34 +135,46 @@ public class UserService {
     public ApiResponse<String> verifyOtpToEmail(String email, String otp) {
         User user = (User) getUserByEmail(email).getData();
         Otp otpDTO = user.getOtp();
-        if(otpDTO != null){
-            if(!otp.equals(otpDTO.getCode())){
-                throw new EmailException("Invalid OTP. Please check the code and try again.");
-            }
-            // check otp to ensure it has not expired
-            long timeLapse = new Date().getTime() - otpDTO.getCreatedAt().getTime();
-            // ensure the time lapse is not greater than 15 mins in milliseconds
-            if(timeLapse >= 900000) {
-                throw new EmailException("The One-Time Password (OTP) has expired. Please request a new one.");
-            }
-            if (otpDTO.isVerified() != true){
-                otpDTO.setVerified(true);
-                user.setOtp(otpDTO);
-                userRepository.save(user);
-            }
-        }
+        if(otpDTO == null)
+            throw new EmailException("Please request a new one.");
+
+        if (otpDTO.isVerified() != true)
+            throw new EmailException("The OTP already verified.");
+
+        if(!otp.equals(otpDTO.getCode()))
+            throw new EmailException("Invalid OTP. Please check the code and try again.");
+
+        // check otp to ensure it has not expired
+        long timeLapse = new Date().getTime() - otpDTO.getCreatedAt().getTime();
+        // ensure the time lapse is not greater than 15 mins in milliseconds
+        if(timeLapse >= 900000)
+            throw new EmailException("The OTP has expired. Please request a new one.");
+
+        otpDTO.setVerified(true);
+        user.setOtp(otpDTO);
+        userRepository.save(user);
+
         return new ApiResponse<String>(HttpStatus.OK.value(), "OTP verification successful");
     }
 
     public ApiResponse<String> changePassword(ChangePasswordDTO passwordDTO) {
         User userByEmail = (User)getUserByEmail(passwordDTO.getEmail()).getData();
-        if(!userByEmail.getOtp().isVerified()){
+        Otp otpDTO = userByEmail.getOtp();
+
+        if(otpDTO == null)
+            throw new EmailException("Please request for a new OTP.");
+
+        if(!otpDTO.isVerified())
             throw new EmailException("OTP is not verified. Please resend otp and try again.");
-        }
+
         // ensure the time lapse is not greater than 15 mins in milliseconds
-        if(new Date().getTime() - userByEmail.getOtp().getCreatedAt().getTime() >= 900000) {
+        if(new Date().getTime() - otpDTO.getCreatedAt().getTime() >= 900000)
             throw new EmailException("The One-Time Password (OTP) has expired. Please request a new one.");
-        }
+
+        if(passwordEncoder.matches(passwordDTO.getPassword(),userByEmail.getPassword()))
+            throw new EmailException("Old password and new password are same.");
+
+
         userByEmail.setPassword(passwordEncoder.encode(passwordDTO.getPassword()));
         userByEmail.setOtp(null);
         userRepository.save(userByEmail);
