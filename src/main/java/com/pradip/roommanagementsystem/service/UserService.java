@@ -138,7 +138,7 @@ public class UserService {
         if(otpDTO == null)
             throw new EmailException("Please request a new one.");
 
-        if (otpDTO.isVerified() != true)
+        if (otpDTO.isVerified() == true)
             throw new EmailException("The OTP already verified.");
 
         if(!otp.equals(otpDTO.getCode()))
