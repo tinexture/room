@@ -13,14 +13,14 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Anton&family=Edu+NSW+ACT+Foundation&family=Open+Sans:ital,wght@0,300;0,500;1,300;1,400&family=Oswald:wght@200;300;400;500;700&family=Rubik&display=swap"
         rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <link rel="stylesheet" href="asstes/css/common.css">
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/registration.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
     <script src="asstes/js/dynamicAdress.js"></script>
     <script src="asstes/js/comman.js"></script>
-
     <script src="asstes/js/validationFunction.js"></script>
+    
 </head>
 
 <body>
@@ -28,7 +28,7 @@
         <form id="regForm" action="#">
 
             <div class="form-group md-3">
-                <h2 class="text-center">Registration </h2>
+                <h2 class="text-center">Registration</h2>
             </div>
             <!--personal Details -->
             <div class="tab">
@@ -36,22 +36,22 @@
                     <legend>Personal Details</legend>
                     <div class="form-group">
                         <label for="exampleInputEmail1">First Name</label>
-                        <input type="text" class="form-control text-check" id="fname" value="pradip"
-                            aria-describedby="emailHelp" placeholder="Enter First Name">
+                        <input type="text" class="form-control text-check" id="fname" aria-describedby="emailHelp"
+                            value="sandip" placeholder="Enter First Name">
                         <p class="error" id="fname-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Last Name</label>
-                        <input type="text" class="form-control text-check" id="lname" value="chavda"
-                            aria-describedby="emailHelp" placeholder="Enter Last Name">
+                        <input type="text" class="form-control text-check" id="lname" aria-describedby="emailHelp"
+                        value="sandip" placeholder="Enter Last Name">
                         <p class="error" id="lname-err"></p>
                     </div>
                     <div class="form-group profile-picture">
-                        <label class="py-1" for="upload-profile-picture">Upload Profile Picture <br> <img
+                        <label class="py-1" for="upload-profile-picture">Upload Profile Picture<br><img
                                 src="asstes/images/profile picture.png" id="preview"> </label>
                         <input type="file" accept="image/*" class="form-control" id="upload-profile-picture"
-                            placeholder="Confirm Password">
-                        <p class="error" id="password-err"></p>
+                            placeholder="Confirm Password" value="">
+                        <p class="error" id="profile-picture-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address </label>
                         <textarea placeholder="Enter General Address" name="general-address" id="general-address"
-                            cols="" rows="3"></textarea>
+                        value="sandip ewrawstgdhfjglhgkfjdreytygtjgtf" cols="" rows="3"></textarea>
                         <p class="error" id="address-err"></p>
                     </div>
                     <div class="fild container-fluid">
@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                     <label for="country">Country</label>
                                     <select class="drop-down" name="country" id="country">
-
+                                        <option value="selected">country</option>
                                     </select>
                                     <p class="error" id="country-err"></p>
                                 </div>
@@ -91,7 +91,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">State</label>
                                     <select class="drop-down" name="state" id="state">
-                                        <option value="state">State</option>
+                                        <option value="selected">State</option>
                                     </select>
                                     <p class="error" id="state-err"></p>
                                 </div>
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">City</label>
                                     <select class="drop-down" name="city" id="city">
-                                        <option value="city">City</option>
+                                        <option value="selected">City</option>
                                     </select>
                                     <p class="error" id="city-err"></p>
                                 </div>
@@ -112,8 +112,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Pin Code</label>
                                     <input type="number" class="form-control drop-down" id="pin-code-fild"
-                                        aria-describedby="emailHelp" placeholder="Enter Pin Code">
-                                    <p class="error" id="city-err"></p>
+                                    value="123456" aria-describedby="emailHelp" placeholder="Enter Pin Code">
+                                    <p class="error" id="pincode-err"></p>
                                 </div>
                             </div>
                         </div>
@@ -126,23 +126,23 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile Number</label>
                         <input type="number" class="form-control" id="mobile-fild" aria-describedby="emailHelp"
-                            placeholder="Enter Last Name">
+                        value="1234567890" placeholder="Enter Last Name">
                         <p class="error" id="mobile-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email Address</label>
                         <input type="email" class="form-control" id="email-fild" aria-describedby="emailHelp"
-                            placeholder="Enter Email">
+                        value="chavdasand@gmail.com" placeholder="Enter Email">
                         <p class="error" id="email-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="password-fild" placeholder="Password">
+                        <input type="password" class="form-control" id="password-fild" placeholder="Password" value="Sandip@123">
                         <p class="error" id="password-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" id="cpassword-fild" placeholder="Confirm Password">
+                        <input type="password" class="form-control" id="cpassword-fild" placeholder="Confirm Password" value="Sandip@123">
                         <p class="error" id="cpassword-err"></p>
                     </div>
                 </fieldset>
@@ -153,7 +153,9 @@
                         onclick="nextPrev(-1)">Previous</button>
                     <button class="btn btn-primary" style="float: right;" type="button" id="nextBtn"
                         onclick="nextPrev(1)">Next</button>
-                    <button class="btn btn-primary" onclick="callLRegistrationApi()" style="float: right;" type="button" id="submit">Submit</button>
+                    <div id="cover-spin"></div>
+                    <!-- <button class="btn btn-primary" onclick="" style="float: right;" type="button"
+                        id="submit">Submit</button> -->
                 </div>
             </div>
             <div class="form-group text-center pt-3 ">
@@ -164,20 +166,8 @@
     </div>
     <script src="asstes/js/registration.js"></script>
     <script>
-        $('#sub_btn').click(function () {
-            var fname = $('#fname').val();
-            var lname = $('#lname').val();
-            var fname_error = $('#fname-err');
-            var lname_error = $('#lname-err');
-            console.log(fname + "and-0opspo ");
-            console.log(lname);
-            // var fname_ret = userVlid(fname, fname_error);
-            // var lname_ret = userVlid(lname, lname_error);
-            // if (fname_ret && lname_ret) {
-            //     console.log("form is valid");
-            //     // $('#loginForm').submit();
-            // }
-        });
+
+
     </script>
 
 </body>

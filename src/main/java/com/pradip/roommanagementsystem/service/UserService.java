@@ -44,6 +44,9 @@ public class UserService {
     @Autowired
     private GeneralUtil util;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
 
@@ -134,19 +137,35 @@ public class UserService {
         Otp otpDTO = user.getOtp();
         if(otpDTO != null){
             if(!otp.equals(otpDTO.getCode())){
-                throw new EmailException("Otp is invalid.");
+                throw new EmailException("Invalid OTP. Please check the code and try again.");
             }
             // check otp to ensure it has not expired
-            Date todaysDate = new Date();
-            long timeLapse = todaysDate.getTime() - otpDTO.getCreatedAt().getTime();
+            long timeLapse = new Date().getTime() - otpDTO.getCreatedAt().getTime();
             // ensure the time lapse is not greater than 15 mins in milliseconds
             if(timeLapse >= 900000) {
-                throw new EmailException("Otp expired");
+                throw new EmailException("The One-Time Password (OTP) has expired. Please request a new one.");
             }
-            otpDTO.setVerified(true);
-            user.setOtp(otpDTO);
-            userRepository.save(user);
+            if (otpDTO.isVerified() != true){
+                otpDTO.setVerified(true);
+                user.setOtp(otpDTO);
+                userRepository.save(user);
+            }
         }
-        return new ApiResponse<String>(HttpStatus.OK.value(), "Otp is verified");
+        return new ApiResponse<String>(HttpStatus.OK.value(), "OTP verification successful");
+    }
+
+    public ApiResponse<String> changePassword(ChangePasswordDTO passwordDTO) {
+        User userByEmail = (User)getUserByEmail(passwordDTO.getEmail()).getData();
+        if(!userByEmail.getOtp().isVerified()){
+            throw new EmailException("OTP is not verified. Please resend otp and try again.");
+        }
+        // ensure the time lapse is not greater than 15 mins in milliseconds
+        if(new Date().getTime() - userByEmail.getOtp().getCreatedAt().getTime() >= 900000) {
+            throw new EmailException("The One-Time Password (OTP) has expired. Please request a new one.");
+        }
+        userByEmail.setPassword(passwordEncoder.encode(passwordDTO.getPassword()));
+        userByEmail.setOtp(null);
+        userRepository.save(userByEmail);
+        return new ApiResponse<String>(HttpStatus.OK.value(), "Password updated successfully");
     }
 }

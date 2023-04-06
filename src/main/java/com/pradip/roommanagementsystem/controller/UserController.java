@@ -1,6 +1,7 @@
 package com.pradip.roommanagementsystem.controller;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
+import com.pradip.roommanagementsystem.dto.ChangePasswordDTO;
 import com.pradip.roommanagementsystem.dto.RegisterUser;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -46,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUserById(id));
     }
 
-    @GetMapping("/send-mail/{email}")
+    @GetMapping("/send-otp/{email}")
     public ResponseEntity<ApiResponse<String>> sendEmail(@PathVariable String email) throws ClassNotFoundException, MessagingException {
         return ResponseEntity.ok(userService.sendOtpToEmail(email));
     }
@@ -54,5 +56,10 @@ public class UserController {
     @GetMapping("/verify-otp/{email}/{otp}")
     public ResponseEntity<ApiResponse<String>> verifyEmail(@PathVariable String email,@PathVariable String otp) throws ClassNotFoundException, MessagingException {
         return ResponseEntity.ok(userService.verifyOtpToEmail(email,otp));
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<ApiResponse<String>> changePassword(@RequestBody @Valid ChangePasswordDTO password){
+        return ResponseEntity.ok(userService.changePassword(password));
     }
 }
