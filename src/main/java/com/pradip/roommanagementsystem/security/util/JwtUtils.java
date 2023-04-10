@@ -23,7 +23,7 @@ public class JwtUtils {
     private int jwtExpirationMs;
 
     public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+        return getClaimFromToken(removeBearer(token), Claims::getSubject);
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -63,11 +63,8 @@ public class JwtUtils {
     }
 
     public boolean validateJwtToken(String authToken) {
-        if (!authToken.startsWith("Bearer "))
-            throw new JwtException("JWT Token does not begin with Bearer String");
-        authToken=authToken.substring(7);
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(removeBearer(authToken));
             return true;
         } catch (SignatureException e) {
             throw new JwtException("Invalid JWT signature");
@@ -82,18 +79,10 @@ public class JwtUtils {
         }
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        return true;
-//        CustomUserDetails jwtUserDetails = (CustomUserDetails) userDetails;
-//        final String username = getUsernameFromToken(token);
-//        final String userLevel = getClaimFromToken(token, claims -> claims.get(JWT_USER_LEVEL)).toString();
-//        final String country = getClaimFromToken(token, claims -> claims.get(JWT_COUNTRY)).toString();
-//        final String role = getClaimFromToken(token, claims -> claims.get(JWT_ROLE)).toString();
-//        final boolean active = Boolean.parseBoolean(getClaimFromToken(token, claims -> claims.get(JWT_ACTIVE)).toString());
-//        if(!userLevel.equals(jwtUserDetails.getUserLevel()) || !country.equals(jwtUserDetails.getCountry())
-//                || !role.equals(jwtUserDetails.getRole()) || active!=jwtUserDetails.isActive()){
-//            throw new AccessDeniedException("Your permissions have been changed. Please log in again.");
-//        }
-//        return (username.equals(jwtUserDetails.getUsername()) && !isTokenExpired(token));
+    private String removeBearer(String authToken) {
+        if (!authToken.startsWith("Bearer "))
+            throw new JwtException("JWT Token does not begin with Bearer String");
+
+        return authToken.substring(7);
     }
 }
