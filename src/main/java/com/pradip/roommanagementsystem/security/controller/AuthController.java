@@ -1,6 +1,7 @@
 package com.pradip.roommanagementsystem.security.controller;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
+import com.pradip.roommanagementsystem.dto.JwtResponse;
 import com.pradip.roommanagementsystem.security.dto.LoginRequest;
 import com.pradip.roommanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class AuthController {
         return userService.authenticateUser(loginRequest);
     }
 
-    @GetMapping("/verify-token")
-    public ResponseEntity<ApiResponse> verifyToken(@RequestHeader("token") String token) {
-        return ResponseEntity.ok(userService.verifyJwtToken(token));
+    @PostMapping("/verify-token")
+    public ResponseEntity<ApiResponse> verifyToken(@RequestBody JwtResponse JwtResponse) {
+        return ResponseEntity.ok(userService.verifyJwtToken(JwtResponse.getJwt()));
     }
 }
