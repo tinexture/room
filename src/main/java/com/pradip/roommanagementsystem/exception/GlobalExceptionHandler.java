@@ -1,6 +1,7 @@
 package com.pradip.roommanagementsystem.exception;//package com.pradip.demoproject.exception;
 
 import com.pradip.roommanagementsystem.dto.ApiResponse;
+import io.jsonwebtoken.JwtException;
 import org.hibernate.HibernateException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                 .body("Access Denied: " + ex.getMessage());
     }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> handleJwtException(JwtException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),  ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(EmailException.class)
     public ResponseEntity<ErrorResponse> handleEmailException(EmailException ex) {

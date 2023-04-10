@@ -7,8 +7,6 @@ n
 >src/main/java/com/pradip/roommanagementsystem/entity/Role.java,0/6/06102f98e6c634c35fd055bef65c5baf1f965962
 É
 Ssrc/main/java/com/pradip/roommanagementsystem/dto/projection/UserProjectionDTO.java,a/7/a721486dfd0f3477674f9b687221a128e8da96bf
-{
-Ksrc/main/java/com/pradip/roommanagementsystem/config/WebSecurityConfig.java,8/9/8981d9ac785e49c2b42e4d47648ac1401203f229
 ~
 Nsrc/main/java/com/pradip/roommanagementsystem/dto/projection/UserPersonal.java,c/d/cdd53bd629648f5136be9cb2795208edb4835182
 z
@@ -19,8 +17,6 @@ r
 Bsrc/main/java/com/pradip/roommanagementsystem/dto/ApiResponse.java,6/9/69aa101ae21c97d68354c0b4f0d4f129c07bb532
 s
 Csrc/main/java/com/pradip/roommanagementsystem/util/GeneralUtil.java,4/1/4130b4efb068c4ad920d2c4ad352f6107d4f5994
-|
-Lsrc/main/java/com/pradip/roommanagementsystem/repository/UserRepository.java,9/6/96c20c5cfedbad987585dd61465e6f2b4bc791e2
 n
 >src/main/java/com/pradip/roommanagementsystem/entity/User.java,f/1/f1e00a4dfa8f6eed04879c9c37808680dc098291
 z
@@ -35,7 +31,15 @@ x
 Hsrc/main/java/com/pradip/roommanagementsystem/dto/ChangePasswordDTO.java,f/0/f0c86f00e772a438c8af8c3ca570cfb9f13f9b41
 Å
 Qsrc/main/java/com/pradip/roommanagementsystem/scheduler/ServerCheckScheduler.java,6/4/64cb0c6f4f6869ccf814dd2c86e6a90288e95f85
-|
-Lsrc/main/java/com/pradip/roommanagementsystem/controller/UserController.java,d/c/dc23c635acd531ae3994decedd9c20d1705fe51b
 q
 Asrc/main/java/com/pradip/roommanagementsystem/entity/Address.java,5/0/502edfab2a6c78fe6faf991eb3ea6d531df2993d
+v
+Fsrc/main/java/com/pradip/roommanagementsystem/service/UserService.java,9/f/9f79e187415d770ccca552b259146d9d0b895049
+y
+Isrc/main/java/com/pradip/roommanagementsystem/dto/projection/UserOtp.java,6/8/6863e2987119ac91aa4dcf0009cbf56904f5f9e9
+|
+Lsrc/main/java/com/pradip/roommanagementsystem/repository/UserRepository.java,9/6/96c20c5cfedbad987585dd61465e6f2b4bc791e2
+|
+Lsrc/main/java/com/pradip/roommanagementsystem/controller/UserController.java,d/c/dc23c635acd531ae3994decedd9c20d1705fe51b
+{
+Ksrc/main/java/com/pradip/roommanagementsystem/config/WebSecurityConfig.java,8/9/8981d9ac785e49c2b42e4d47648ac1401203f229

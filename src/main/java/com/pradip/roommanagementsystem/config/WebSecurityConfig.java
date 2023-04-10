@@ -31,7 +31,8 @@ public class WebSecurityConfig {
             "/",
             "/keep-alive",
             "/user/verify-otp/**",
-            "/user/send-otp/**"
+            "/user/send-otp/**",
+            "/verify-token"
     };
     @Autowired
     CustomUserDetailsService userDetailsService;

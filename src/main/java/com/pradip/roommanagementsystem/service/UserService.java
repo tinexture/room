@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
-import java.sql.Timestamp;
-import java.time.Duration;
 import java.util.*;
 
 @Service
@@ -179,5 +177,10 @@ public class UserService {
         userByEmail.setOtp(null);
         userRepository.save(userByEmail);
         return new ApiResponse<String>(HttpStatus.OK.value(), "Password updated successfully");
+    }
+
+    public ApiResponse<Object> verifyJwtToken(String token) {
+        jwtUtils.validateJwtToken(token);
+        return new ApiResponse<Object>(HttpStatus.OK.value(),"Token is verified");
     }
 }

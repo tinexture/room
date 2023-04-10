@@ -9,6 +9,7 @@ mvnw
 mvnw.cmd
 
 # Ignore IDE-specific files
+.idea/sonarlint/issuestore/index.pb
 .idea/
 *.iml
 *.ipr

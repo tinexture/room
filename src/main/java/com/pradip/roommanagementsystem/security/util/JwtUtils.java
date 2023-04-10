@@ -63,22 +63,23 @@ public class JwtUtils {
     }
 
     public boolean validateJwtToken(String authToken) {
+        if (!authToken.startsWith("Bearer "))
+            throw new JwtException("JWT Token does not begin with Bearer String");
+        authToken=authToken.substring(7);
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
-            logger.error("Invalid JWT signature: {}", e.getMessage());
+            throw new JwtException("Invalid JWT signature");
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT token: {}", e.getMessage());
+            throw new JwtException("Invalid JWT token");
         } catch (ExpiredJwtException e) {
-            logger.error("JWT token is expired: {}", e.getMessage());
+            throw new JwtException("JWT token is expired");
         } catch (UnsupportedJwtException e) {
-            logger.error("JWT token is unsupported: {}", e.getMessage());
+            throw new JwtException("JWT token is unsupported");
         } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty: {}", e.getMessage());
+            throw new JwtException("JWT claims string is empty");
         }
-
-        return false;
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
