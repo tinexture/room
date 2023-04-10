@@ -1,8 +1,8 @@
 function callLRegistrationApi() {
-    $('#cover-spin').show();
-    const apiUrl = 'https://roomates.onrender.com/user';
+    $('#cover-spin').show(); // It enable spinner 
+    // Below ajax use to call create user API by passing set of user fields
     $.ajax({
-        url: apiUrl,
+        url: apiUrl+"/user",
         method: "POST",
         data: JSON.stringify({
             "firstName": $("#fname").val(),
@@ -26,17 +26,16 @@ function callLRegistrationApi() {
             'Content-Type': 'application/json'
         },
         success: function (responce) {
-            $('#cover-spin').hide();
+            $('#cover-spin').hide(); // disable loader
+            showToast("User created successsfully", 'success');
             console.log("API responce", responce);
-            alert("User created successsfully");
-            window.location.href = "login.html";
-
+            window.location.href = "login.html"; // API response successfully then redirect login.html 
         },
         error: function (xhr, status, error) {
-            $('#cover-spin').hide();
-            var errorMessage = JSON.parse(xhr.responseText);
-            console.log(errorMessage.message);
-            alert(errorMessage.message);
+            $('#cover-spin').hide(); // disable loader
+            showToast("User logged-in successsfully", 'success');
+            var errorMessage = JSON.parse(xhr.responseText); // convert json to plantext
+            console.log(errorMessage.message); // console error
         }
     });
 }
@@ -45,6 +44,7 @@ function callLRegistrationApi() {
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 $("#submit").css("display", "none");
+// Below function use for hide and show all fields like personal details, address details, login details
 function showTab(n) {//0
     var allTabs = $(".tab");
     allTabs.eq(n).css("display", "block");
@@ -59,11 +59,11 @@ function showTab(n) {//0
         HideShow("#prevBtn", "inline");
     }
 }
-
+// Below function use for hide and show eny elements
 function HideShow(element, value) {
     $(element).css("display", value);
 }
-
+// Below function use for click next botton then currentTab hide and nextTab show
 function nextPrev(n) {
     var allTabs = $(".tab");
     // If n == 1 then user clicked next button otherwise previous
@@ -79,7 +79,7 @@ function nextPrev(n) {
         showTab(--currentTab);
     }
 }
-
+// Below function use for check validation
 function validateFields(stepNum) {
     var currentStep = $("#step" + stepNum).children(".form-group");
     if (stepNum == 1) {
@@ -91,14 +91,18 @@ function validateFields(stepNum) {
         var lname_error = $('#lname-err');
         var gender_error = $('#gender-err');
         var profile_picture_err = $('#profile-picture-err');
-
+      
         var fname_retu = userVlid(fname, fname_error);
         var lname_retu = userVlid(lname, lname_error);
         var profile_retu = profileVlid(profile_picture, profile_picture_err);
         var gender_retu = genderVlid(gender, gender_error);
 
-        if (fname_retu && lname_retu && profile_retu && gender_retu) {
+        borderErrorColor(fname_retu, $('#fname'));
+        borderErrorColor(lname_retu, $('#lname'));
+        borderErrorColor(gender_retu, $('#gender'));
+        borderErrorColor(profile_retu, $('#upload-profile-picture'));
 
+        if (fname_retu && lname_retu && profile_retu && gender_retu) {
             return true;
         } else {
             return false;
@@ -115,16 +119,21 @@ function validateFields(stepNum) {
         var city_err = $('#city-err');
         var pincode = $('#pin-code-fild').val();
         var pincode_err = $('#pincode-err');
+        
 
         var address_retu = addressVlid(general_address, address_error);
         var country_retu = genderVlid(country, country_err);
         var state_retu = genderVlid(state, state_err);
         var city_retu = genderVlid(city, city_err);
-        var pincode_retu = profileVlid(pincode, pincode_err);
+        var pincode_retu = pincodeVlid(pincode, pincode_err);
 
+        borderErrorColor(address_retu, $('#general-address'));
+        borderErrorColor(country_retu, $('#country'));
+        borderErrorColor(state_retu, $('#state'));
+        borderErrorColor(city_retu, $('#city'));
+        borderErrorColor(pincode_retu, $('#pin-code-fild'));
 
         if (address_retu && country_retu && state_retu && city_retu && pincode_retu) {
-
             return true;
         } else {
             return false;
@@ -145,6 +154,10 @@ function validateFields(stepNum) {
         var pass_retu = passVlid(pass, pass_err);
         var cpass_retu = conpassVlid(cpass, pass, cpass_err);
 
+        borderErrorColor(mobile_retu, $('#mobile-fild'));
+        borderErrorColor(email_retu, $('#email-fild'));
+        borderErrorColor(pass_retu, $('#password-fild'));
+        borderErrorColor(cpass_retu, $('#cpassword-fild'));
         if (mobile_retu && email_retu && pass_retu && cpass_retu) {
             console.log("form is valid");
             callLRegistrationApi();
@@ -156,13 +169,12 @@ function validateFields(stepNum) {
 
     }
 }
-
+// Below function use for read base64String
 function encodeImageFileAsURL(element) {
     var input = $('#upload-profile-picture')[0];
     var reader = new FileReader();
     reader.onload = function (event) {
         var base64String = event.target.result;
-        // console.log(base64String);
     };
     reader.readAsDataURL(input.files[0]);
     $("#preview").attr("src ", base64String);

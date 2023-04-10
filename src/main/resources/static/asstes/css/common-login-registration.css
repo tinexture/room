@@ -11,6 +11,28 @@
     align-items: center;
 }
 
+#api-responce {
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    max-width: 300px;
+}
+
+#api-responce .toast-message {
+    max-width: 280px;
+    min-width: 200px;
+    overflow: auto;
+    word-wrap: break-word;
+    padding: 11px;
+    background-color: #333;
+    border-radius: 5px;
+    margin: 10px 10px;
+    color: #fff;
+    transition: opacity 0.3s ease-in-out;
+}
+
 .main form {
     width: 320px;
     border: 1px solid;

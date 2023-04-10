@@ -1,3 +1,11 @@
+function borderErrorColor(ret_fild_valid, elementTag) {
+    if (ret_fild_valid != true) {
+        elementTag.css("border-color", "red");
+    } else {
+        elementTag.css("border-color", "#ced4da");
+    }
+}
+
 function emailVlid(emails, errEle) {
     var nameRetn = true;
     if (emails == "") {
@@ -22,6 +30,7 @@ function emailVlid(emails, errEle) {
         nameRetn = true;
     }
     if (nameRetn != true) {
+
         return false;
     } else {
         return true;
@@ -156,7 +165,7 @@ function numberVlid(mobileNumber, errEle) {
     var nameRetn = true;
     if (mobileNumber == "") {
         errEle.css("display", "block");
-        errEle.text(" Please fill the mobile Number field");
+        errEle.text(" Please fill the mobile this field");
         nameRetn = false;
     }
     else if (isNaN(mobileNumber)) {
@@ -179,12 +188,67 @@ function numberVlid(mobileNumber, errEle) {
         return true;
     }
 }
+function pincodeVlid(pincode, errEle) {
+    var nameRetn = true;
+    if (pincode == "") {
+        errEle.css("display", "block");
+        errEle.text(" Please fill the mobile this field");
+        nameRetn = false;
+    }
+    else if (isNaN(pincode)) {
+        errEle.css("display", "block");
+        errEle.text(" user must write digits only not characters");
+        nameRetn = false;
+    }
+    else if (pincode.length != 6) {
+        errEle.css("display", "block");
+        errEle.text(" Mobile Number must be 6 digits only");
+        nameRetn = false;
+    } else {
+        errEle.css("display", "none");
+        errEle.text("");
+        nameRetn = true;
+    }
+    if (nameRetn != true) {
+        return false;
+    } else {
+        return true;
+    }
+}
+function otpVlid(otp, errEle) {
+    var nameRetn = true;
+    if (otp == "" || otp == null) {
+        errEle.css("display", "block");
+        errEle.text(" Please fill the mobile this field");
+        nameRetn = false;
+    }
+    else if (otp.length != 6) {
+        errEle.css("display", "block");
+        errEle.text(" otp must be 6 digits only");
+        nameRetn = false;
+    }
+    else if (isNaN(otp)) {
+        errEle.css("display", "block");
+        errEle.text(" user must write digits only not characters");
+        nameRetn = false;
+    }
+    else {
+        errEle.css("display", "none");
+        errEle.text("");
+        nameRetn = true;
+    }
+    if (nameRetn != true) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 function genderVlid(gender, errEle) {
     var nameRetn = true;
     if (gender == "selected" || gender == "") {
         errEle.css("display", "block");
-        errEle.text("Please select gender ");
+        errEle.text("Please select tjis field ");
         nameRetn = false;
     }
     else {
@@ -217,5 +281,6 @@ function profileVlid(picture, errEle) {
         return true;
     }
 }
+
 
 

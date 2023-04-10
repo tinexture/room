@@ -17,38 +17,37 @@
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/forgot.css">
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="asstes/js/validationFunction.js"></script>
     <script src="asstes/js/comman.js"></script>
 </head>
 
 <body>
     <div class="main">
-        <form onsubmit="return false">
+        <form onsubmit="">
             <div class="form-group md-3">
-                <h2 class="text-center">Login</h2>
+                <h2 class="text-center">forgot password</h2>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="forgot-email-field">
                 <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    placeholder="Enter Email">
-                <p class="error error-" id="email-err"></p>
+                <input type="email" class="form-control" id="fEmail" aria-describedby="emailHelp"
+                    placeholder="Enter Email"
+                    onblur="borderErrorColor(emailVlid($('#fEmail').val(), $('#femail-err')), $('#fEmail'))">
+                <p class="error" id="femail-err"></p>
             </div>
 
-            <button type="submit" id="generate-otp" class="btn btn-primary btn-size">Send OTP</button>
-            <div class="form-group opt-section mt-2">
+            <button type="button" id="generate-otp" class="btn btn-primary btn-size">Send OTP</button>
+            <div class="form-group otp-section mt-2">
                 <label for="exampleInputPassword1">OTP</label>
-                <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Enter OPT">
-                <p class="error " id="password-err"></p>
+                <input type="number" class="form-control" id="otp-field" placeholder="Enter OTP"
+                    onblur="borderErrorColor(otpVlid($('#otp-field').val(), $('#otp-err')), $('#otp-field'))">
+                <p class="error" id="otp-err"></p>
             </div>
-            <button type="submit" id="verified-otp" class="btn btn-primary btn-size">Verified OTP</button>
-
+            <button type="button" id="verified-otp" class="btn btn-primary btn-size">Verified OTP</button>
+            <div class="form-group text-center pt-3 ">
+                <a href="login.html" id="create-new">back to login page</a>
+            </div>
         </form>
     </div>
-    <script>
-        $("#generate-otp").click(function () {
-            $(".opt-section").css("display", "block");
-            $("#verified-otp").css("display", "block");
-        });
-    </script>
 </body>
-
+    <script src="asstes/js/forgot.js"></script>
 </html>
