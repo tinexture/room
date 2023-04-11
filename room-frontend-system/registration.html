@@ -10,21 +10,20 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Edu+NSW+ACT+Foundation&family=Open+Sans:ital,wght@0,300;0,500;1,300;1,400&family=Oswald:wght@200;300;400;500;700&family=Rubik&display=swap"
-        rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <link href="asstes/css/css2.css" rel="stylesheet">
+    <script src="asstes/js/jquery-3.6.4.js"></script>
     <link rel="stylesheet" href="asstes/css/common.css">
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/registration.css">
     <script src="asstes/js/dynamicAdress.js"></script>
     <script src="asstes/js/comman.js"></script>
     <script src="asstes/js/validationFunction.js"></script>
-    
+
 </head>
 
 <body>
     <div class="main">
+        <div id="api-responce"></div>
         <form id="regForm" action="#">
 
             <div class="form-group md-3">
@@ -37,25 +36,29 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">First Name</label>
                         <input type="text" class="form-control text-check" id="fname" aria-describedby="emailHelp"
-                            value="sandip" placeholder="Enter First Name">
+                            placeholder="Enter First Name" onblur="borderErrorColor(userVlid($('#fname').val(),
+                            $('#fname-err')), $('#fname'))">
                         <p class="error" id="fname-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Last Name</label>
                         <input type="text" class="form-control text-check" id="lname" aria-describedby="emailHelp"
-                        value="sandip" placeholder="Enter Last Name">
+                            placeholder="Enter Last Name"
+                            onblur="borderErrorColor(userVlid($('#lname').val(), $('#lname-err')),$('#lname'))">
                         <p class="error" id="lname-err"></p>
                     </div>
                     <div class="form-group profile-picture">
                         <label class="py-1" for="upload-profile-picture">Upload Profile Picture<br><img
                                 src="asstes/images/profile picture.png" id="preview"> </label>
-                        <input type="file" accept="image/*" class="form-control" id="upload-profile-picture"
-                            placeholder="Confirm Password" value="">
+                        <input type="file" accept=".jpg,.png" class="form-control" id="upload-profile-picture"
+                            placeholder="Confirm Password"
+                            onblur="borderErrorColor(profileVlid($('#upload-profile-picture').val(), $('#profile-picture-err')),$('#upload-profile-picture'))">
                         <p class="error" id="profile-picture-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
-                        <select name="Gender" class="drop-down" id="gender"> <br>
+                        <select name="Gender" class="drop-down" id="gender"
+                            onblur="borderErrorColor(genderVlid($('#gender').val(), $('#gender-err')),$('#gender'))"><br>
                             <option value="selected">Select..</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -65,7 +68,7 @@
                     </div>
                 </fieldset>
             </div>
-
+       
             <!-- Address Information -->
             <div class="tab">
                 <fieldset id="step2">
@@ -73,7 +76,8 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Address </label>
                         <textarea placeholder="Enter General Address" name="general-address" id="general-address"
-                        value="sandip ewrawstgdhfjglhgkfjdreytygtjgtf" cols="" rows="3"></textarea>
+                            value="sandip ewrawstgdhfjglhgkfjdreytygtjgtf" cols="" rows="3"
+                            onblur="borderErrorColor(addressVlid($('#general-address').val(), $('#address-err')),$('#general-address'))"></textarea>
                         <p class="error" id="address-err"></p>
                     </div>
                     <div class="fild container-fluid">
@@ -81,7 +85,8 @@
                             <div class="col-12 col-sm-6 pr-sm-1">
                                 <div class="form-group">
                                     <label for="country">Country</label>
-                                    <select class="drop-down" name="country" id="country">
+                                    <select class="drop-down" name="country" id="country"
+                                        onblur="borderErrorColor(genderVlid($('#country').val(), $('#country-err')),$('#country'))">
                                         <option value="selected">country</option>
                                     </select>
                                     <p class="error" id="country-err"></p>
@@ -90,7 +95,8 @@
                             <div class="col-12 col-sm-6 pl-sm-1">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">State</label>
-                                    <select class="drop-down" name="state" id="state">
+                                    <select class="drop-down" name="state" id="state"
+                                        onblur="borderErrorColor(genderVlid($('#state').val(), $('#state-err')),$('#state'))">
                                         <option value="selected">State</option>
                                     </select>
                                     <p class="error" id="state-err"></p>
@@ -102,7 +108,8 @@
                             <div class="col-12 col-sm-6 pr-sm-1">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">City</label>
-                                    <select class="drop-down" name="city" id="city">
+                                    <select class="drop-down" name="city" id="city"
+                                        onblur="borderErrorColor(genderVlid($('#city').val(), $('#city-err')),$('#city'))">
                                         <option value="selected">City</option>
                                     </select>
                                     <p class="error" id="city-err"></p>
@@ -112,7 +119,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Pin Code</label>
                                     <input type="number" class="form-control drop-down" id="pin-code-fild"
-                                    value="123456" aria-describedby="emailHelp" placeholder="Enter Pin Code">
+                                        aria-describedby="emailHelp" placeholder="Enter Pin Code"
+                                        onblur="borderErrorColor(pincodeVlid($('#pin-code-fild').val(), $('#pincode-err')),$('#pin-code-fild'))">
                                     <p class="error" id="pincode-err"></p>
                                 </div>
                             </div>
@@ -126,23 +134,28 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Mobile Number</label>
                         <input type="number" class="form-control" id="mobile-fild" aria-describedby="emailHelp"
-                        value="1234567890" placeholder="Enter Last Name">
+                            placeholder="Enter Last Name"
+                            onblur="borderErrorColor(numberVlid($('#mobile-fild').val(), $('#mobile-err')),$('#mobile-fild'))">
                         <p class="error" id="mobile-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email Address</label>
                         <input type="email" class="form-control" id="email-fild" aria-describedby="emailHelp"
-                        value="chavdasand@gmail.com" placeholder="Enter Email">
+                            placeholder="Enter Email"
+                            onblur="borderErrorColor(emailVlid($('#email-fild').val(), $('#email-err')),$('#email-fild'))">
                         <p class="error" id="email-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="password-fild" placeholder="Password" value="Sandip@123">
+                        <input type="password" class="form-control" id="password-fild" placeholder="Password"
+                            onblur="borderErrorColor(passVlid($('#password-fild').val(), $('#password-err')),$('#password-fild'))">
                         <p class="error" id="password-err"></p>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" class="form-control" id="cpassword-fild" placeholder="Confirm Password" value="Sandip@123">
+                        <input type="password" class="form-control" id="cpassword-fild" placeholder="Confirm Password"
+                            onblur="borderErrorColor(conpassVlid($('#cpassword-fild').val(), $('#password-fild').val(),
+                        $('#cpassword-err')),$('#cpassword-fild'))">
                         <p class="error" id="cpassword-err"></p>
                     </div>
                 </fieldset>
@@ -154,8 +167,6 @@
                     <button class="btn btn-primary" style="float: right;" type="button" id="nextBtn"
                         onclick="nextPrev(1)">Next</button>
                     <div id="cover-spin"></div>
-                    <!-- <button class="btn btn-primary" onclick="" style="float: right;" type="button"
-                        id="submit">Submit</button> -->
                 </div>
             </div>
             <div class="form-group text-center pt-3 ">
