@@ -1,4 +1,3 @@
-const apiUrl = 'https://roommates-782r.onrender.com';
 function callLRegistrationApi() {
     $('#cover-spin').show(); // It enable spinner 
     // Below ajax use to call create user API by passing set of user fields
@@ -23,24 +22,21 @@ function callLRegistrationApi() {
                 "pincode": $("#pin-code-fild").val()
             }
         }),
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: jsonHeader,
         success: function (responce) {
-            $('#cover-spin').hide(); // disable loader
-            showToast("User created successsfully", 'success');
             console.log("API responce", responce);
-            window.location.href = "login.html"; // API response successfully then redirect login.html 
+            showToast("User created successsfully", 'success');
+            $('#cover-spin').hide(); // disable loader
+            window.location.replace("login.html"); // API response successfully then redirect login.html 
         },
         error: function (xhr, status, error) {
             $('#cover-spin').hide(); // disable loader
             var errorMessage = JSON.parse(xhr.responseText); // convert json to plantext
-            showToast(errorMessage.status+errorMessage.message, 'error');
+            showToast(errorMessage.status + errorMessage.message, 'error');
             console.log(errorMessage.message); // console error
         }
     });
 }
-
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
@@ -162,7 +158,8 @@ function validateFields(stepNum) {
         if (mobile_retu && email_retu && pass_retu && cpass_retu) {
             console.log("form is valid");
             callLRegistrationApi();
-            console.log("api Called successfully");
+            // console.log("api Called successfully");
+            // validateFields(1);
             return true;
         } else {
             return false;
@@ -170,21 +167,13 @@ function validateFields(stepNum) {
 
     }
 }
-// Below function use for read base64String
-function encodeImageFileAsURL(element) {
-    var input = $('#upload-profile-picture')[0];
-    var reader = new FileReader();
-    reader.onload = function (event) {
-        var base64String = event.target.result;
-    };
-    reader.readAsDataURL(input.files[0]);
-    $("#preview").attr("src ", base64String);
-}
 
 // Set Preview Image function
 var preview = $('#preview');
 var profile_picture = $('#upload-profile-picture');
 profile_picture.change(function (event) {
+    var hello = encodeImageFileAsURL(null);
+    console.log(hello + "fdgdfgdgdfgdfgfd");
     if (event.target.files.length == 0) {
         return 0;
     }
@@ -193,3 +182,90 @@ profile_picture.change(function (event) {
 });
 
 
+let auth_token;
+$(document).ready(function () {
+    $.ajax({
+        type: 'get',
+        url: 'https://www.universal-tutorial.com/api/getaccesstoken',
+        success: function (data) {
+            auth_token = data.auth_token;
+            getCountry(data.auth_token)
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        headers: {
+            "Accept": "application/json",
+            "api-token": "6ipX_pWA4MT4iEk7S-1oRAZ7QvVq2PhmwQFpquICe6DLLHauIRUl_kCQNcrNxelcwSc",
+            "user-email": "chavdasandipbhai@gmail.com"
+        }
+
+    });
+});
+function getCountry(auth_token) {
+    $.ajax({
+        type: 'get',
+        url: 'https://www.universal-tutorial.com/api/countries/',
+        success: function (data) {
+            data.forEach(element => {
+                $('#country').append('<option value="' + element.country_name + '">' + element.country_name + '</option>');
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        headers: {
+            "Authorization": "Bearer " + auth_token,
+            "Accept": "application/json"
+        }
+    });
+    $('#country').change(function () {
+        getState();
+    });
+    $('#state').change(function () {
+        getCity();
+    });
+}
+function getState() {
+    let country_name = $('#country').val();
+    $.ajax({
+        type: 'get',
+        url: 'https://www.universal-tutorial.com/api/states/' + country_name,
+        success: function (data) {
+            $('#state').empty();
+            $('#city').empty();
+            $('#city').append('<option value="select">City</option>');
+            data.forEach(element => {
+                $('#state').append('<option value="' + element.state_name + '">' + element.state_name + '</option>');
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        headers: {
+            "Authorization": "Bearer " + auth_token,
+            "Accept": "application/json"
+        }
+    });
+}
+function getCity() {
+    let state_name = $('#state').val();
+    console.log("Done");
+    $.ajax({
+        type: 'get',
+        url: 'https://www.universal-tutorial.com/api/cities/' + state_name,
+        success: function (data) {
+            $('#city').empty();
+            data.forEach(element => {
+                $('#city').append('<option value="' + element.city_name + '">' + element.city_name + '</option>');
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        headers: {
+            "Authorization": "Bearer " + auth_token,
+            "Accept": "application/json"
+        }
+    });
+}

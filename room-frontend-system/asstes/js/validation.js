@@ -1,24 +1,14 @@
 function borderErrorColor(ret_fild_valid, elementTag) {
     if (ret_fild_valid != true) {
-        elementTag.css("border-color", "red");
+        elementTag.addClass("not-valid-field");
+        elementTag.removeClass("valid-field-box");
+
     } else {
-        elementTag.css("border-color", "#ced4da");
+        elementTag.addClass("valid-field-box");
+        elementTag.removeClass("not-valid-field");
     }
 }
 
-function showToast(message, type) {
-    const $newDiv = $('<div>' + message + '</div>');   // create a div element
-    $newDiv.addClass('toast-message');    // set class for the div element
-    $('#api-responce').append($newDiv);    // append the div element to the body of the page
-    $newDiv.css("background-color", type === 'success' ? '#4CAF50' : '#F44336'); // set new div background color 
-    setTimeout(() => {
-        $newDiv.css("opacity", "0.5");
-    }, 3000);
-    setTimeout(() => {
-        $newDiv.css("display", "none");
-
-    }, 3000);
-}
 
 function emailVlid(emails, errEle) {
     var nameRetn = true;
