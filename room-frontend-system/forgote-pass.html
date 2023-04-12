@@ -5,25 +5,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot password</title>
-    <link rel="stylesheet" href="asstes/library/bootstrap.min.css">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="asstes/library/font-family.css" rel="stylesheet">
-    <link rel="stylesheet" href="asstes/css/general.css">
-    <link rel="stylesheet" href="asstes/css/common-login-registration-forgot.css">
+    <link
+        href="asstes/css/css2.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="asstes/css/common.css">
+    <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/forgot.css">
-    <script src="asstes/library/jquery-3.6.4.js"></script>
-    <script src="asstes/js/variable.js"></script>
-    <script src="asstes/js/general.js"></script>
-    <script src="asstes/js/validate-session.js"></script>
-    <script src="asstes/js/validation.js"></script>
+    <script src="asstes/js/jquery-3.6.4.js"></script>
+    <script src="asstes/js/validationFunction.js"></script>
+    <script src="asstes/js/comman.js"></script>
 </head>
 
 <body>
     <div class="main">
-        <div id="api-responce"></div>
-        <div id="cover-spin"></div>
         <form onsubmit="">
             <div class="form-group md-3">
                 <h2 class="text-center">forgot password</h2>
@@ -44,24 +43,11 @@
                 <p class="error" id="otp-err"></p>
             </div>
             <button type="button" id="verified-otp" class="btn btn-primary btn-size">Verified OTP</button>
-
-            <div class="form-group password-section mt-2">
-                <label for="exampleInputPassword1">New Password</label>
-                <input type="password" class="form-control" id="new-password" placeholder="Enter OTP"
-                    onblur="borderErrorColor(passVlid($('#new-password').val(), $('#new-password-err')), $('#new-password'))">
-                <p class="error" id="new-password-err"></p>
-                <label for="exampleInputPassword1">Re-enter Password</label>
-                <input type="password" class="form-control" id="re-enter-password" placeholder="Enter OTP"
-                    onblur="borderErrorColor(conpassVlid($('#re-enter-password').val(),$('#new-password').val(), $('#re-enter-password-err')), $('#re-enter-password'))">
-                <p class="error" id="re-enter-password-err"></p>
-            </div>
-            <button type="button" id="set-new-password" class="btn btn-primary btn-size">Change Password</button>
             <div class="form-group text-center pt-3 ">
                 <a href="login.html" id="create-new">back to login page</a>
             </div>
         </form>
     </div>
 </body>
-<script src="asstes/js/forgot.js"></script>
-
+    <script src="asstes/js/forgot.js"></script>
 </html>
