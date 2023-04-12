@@ -1,0 +1,27 @@
+# Ignore Gradle build directories
+build/
+.gradle/
+
+# Ignore Maven build directories
+room-backend-system/target/
+room-backend-system/mvnw
+room-backend-system/mvnw.cmd
+
+# Ignore IDE-specific files
+room-backend-system/.idea/sonarlint/issuestore/index.pb
+room-backend-system/.idea/
+room-backend-system/*.iml
+room-backend-system/*.ipr
+room-backend-system/*.iws
+room-backend-system/*.classpath
+room-backend-system/*.project
+
+# Ignore logs and other generated files
+room-backend-system/logs/
+room-backend-system/*.log
+room-backend-system/*.log.*
+room-backend-system/*.out
+room-backend-system/*.pid
+room-backend-system/*.war
+room-backend-system/*.jar
+

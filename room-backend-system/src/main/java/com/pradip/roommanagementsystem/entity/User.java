@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -55,14 +56,18 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Otp otp;
+
     @Column(nullable = false)
     private boolean locked;
 
-    @UpdateTimestamp
+    @CreationTimestamp
     @Column(nullable = false)
     private Timestamp createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(nullable = false, updatable = false)
     private Timestamp updatedAt;
 }

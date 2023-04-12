@@ -21,11 +21,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
-        prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+    private static final String[] PUBLIC_URLS = {
+            "/authenticate",
+            "/data/**",
+            "/**.html",
+            "/asstes/**",
+            "/",
+            "/keep-alive",
+            "/user/verify-otp/**",
+            "/user/send-otp/**",
+            "/verify-token"
+    };
     @Autowired
     CustomUserDetailsService userDetailsService;
 
@@ -62,9 +70,8 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
-//                .antMatchers("**").permitAll()
-                    .antMatchers("/authenticate","/data/**","/**.html","/asstes/**","/","/keep-alive").permitAll()//"/","/create-user","/user","/delete-user","/favicon.ico").permitAll()
-                .antMatchers(HttpMethod.POST, "/user/**").permitAll()
+                    .antMatchers(PUBLIC_URLS).permitAll()
+                .antMatchers(HttpMethod.POST, "/user","/user/change-password").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority(
                             "ROLE_USER","ROLE_ADMIN","ROLE_SUPER_ADMIN").anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()).authenticationEntryPoint(unauthorizedHandler);
