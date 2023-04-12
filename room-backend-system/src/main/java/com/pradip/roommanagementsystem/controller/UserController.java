@@ -49,6 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/send-otp/{email}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ApiResponse<String>> sendEmail(@PathVariable String email) throws ClassNotFoundException, MessagingException {
         return ResponseEntity.ok(userService.sendOtpToEmail(email));
     }
