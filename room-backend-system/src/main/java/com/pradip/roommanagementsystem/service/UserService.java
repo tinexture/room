@@ -1,6 +1,7 @@
 package com.pradip.roommanagementsystem.service;
 
 import com.pradip.roommanagementsystem.dto.*;
+import com.pradip.roommanagementsystem.entity.Address;
 import com.pradip.roommanagementsystem.entity.Otp;
 import com.pradip.roommanagementsystem.entity.Role;
 import com.pradip.roommanagementsystem.entity.User;
@@ -11,6 +12,7 @@ import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
 import com.pradip.roommanagementsystem.security.dto.LoginRequest;
 import com.pradip.roommanagementsystem.security.util.JwtUtils;
 import com.pradip.roommanagementsystem.util.GeneralUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -49,8 +52,8 @@ public class UserService {
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
 
     public ApiResponse<List<?>> getAllUsers(String projectionName) throws ClassNotFoundException {
-        List<User> allBy = userRepository.findAll();
-        //        List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
+//        List<User> allBy = userRepository.findAll();
+                List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
         if(allBy == null || allBy.isEmpty()){
             throw  new EntityNotFoundException("User not found.");
         }
@@ -59,8 +62,8 @@ public class UserService {
     }
 
     public ApiResponse<Object> getUserById(Long id, String projectionName) throws ClassNotFoundException {
-//        Optional<?> userById = userRepository.findById(id,getClassName(projectionName));
-        Optional<?> userById=userRepository.findById(id);
+        Optional<?> userById = userRepository.findById(id,getClassName(projectionName));
+//        Optional<?> userById=userRepository.findById(id);
         if(userById.isPresent()){
             return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
         }
@@ -182,5 +185,36 @@ public class UserService {
     public ApiResponse<Object> verifyJwtToken(String token) {
         jwtUtils.validateJwtToken(token);
         return new ApiResponse<Object>(HttpStatus.OK.value(),"Token is verified");
+    }
+
+    public void createDefaultUser(){
+        String defEmail="default@gmail.com";
+        if (!userRepository.existsByEmail(defEmail)){
+            User user=new User();
+            user.setEmail(defEmail);
+            user.setMobile("1234567897");
+            user.setFirstName("Pradip");
+            user.setLastName("Chavda");
+            user.setGender("Male");
+            user.setPassword(passwordEncoder.encode("99097@Pradip"));
+            user.setLocked(false);
+            user.setEnabled(true);
+
+            Address address=new Address();
+            address.setGeneralAddress("Shankar para, Khas road, Botad");
+            address.setCountry("India");
+            address.setState("Gujarat");
+            address.setPincode(364710);
+            address.setUser(user);
+
+            Role role=new Role();
+            role.setName(ERoles.ROLE_ADMIN);
+            role.setUser(user);
+
+            user.setAddress(address);
+            user.setRoles(Collections.singletonList(role));
+            userRepository.save(user);
+            log.info("Default User Created Successfully.");
+        }
     }
 }

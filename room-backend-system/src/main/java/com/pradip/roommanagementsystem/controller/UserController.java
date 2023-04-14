@@ -5,10 +5,12 @@ import com.pradip.roommanagementsystem.dto.ChangePasswordDTO;
 import com.pradip.roommanagementsystem.dto.RegisterUser;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
@@ -16,10 +18,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
+@Slf4j
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @PostConstruct
+    public void createDefaultUser() {
+        userService.createDefaultUser();
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<?>>> getAlUsers(@RequestParam("projection") String projectionName) throws ClassNotFoundException {

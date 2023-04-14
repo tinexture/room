@@ -23,8 +23,8 @@ public class ServerCheckScheduler {
             System.out.println("=> Current Time         : "+timeDate[1].substring(0,timeDate[1].indexOf("."))+"");
             System.out.println("=> Current Date         : "+timeDate[0]+"\n");
         }
-        catch (ArrayIndexOutOfBoundsException ex){
-            System.out.println("Time and date is not available.");
+        catch (Exception ex){
+            System.out.println("Error in scheduler "+ex.getMessage());
         }
 
     }
