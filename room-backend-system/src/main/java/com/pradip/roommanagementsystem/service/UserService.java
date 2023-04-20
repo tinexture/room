@@ -14,6 +14,7 @@ import com.pradip.roommanagementsystem.security.util.JwtUtils;
 import com.pradip.roommanagementsystem.util.GeneralUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.persistence.EntityNotFoundException;
+import java.awt.datatransfer.Clipboard;
 import java.util.*;
 
 @Service
@@ -46,68 +48,78 @@ public class UserService {
     private GeneralUtil util;
 
     @Autowired
+    @Lazy
     private PasswordEncoder passwordEncoder;
-
 
     private static final String projectionPackage = "com.pradip.roommanagementsystem.dto.projection.";
 
-    public ApiResponse<List<?>> getAllUsers(String projectionName) throws ClassNotFoundException {
+    public List<?> getAllUsers(String projectionName) {
 //        List<User> allBy = userRepository.findAll();
                 List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
         if(allBy == null || allBy.isEmpty()){
             throw  new EntityNotFoundException("User not found.");
         }
 
-        return new ApiResponse<List<?>>(HttpStatus.OK.value(), "Users fetched successfully.", allBy);
+        return allBy;
     }
 
-    public ApiResponse<Object> getUserById(Long id, String projectionName) throws ClassNotFoundException {
+    public Object getUserById(Long id, String projectionName) {
         Optional<?> userById = userRepository.findById(id,getClassName(projectionName));
 //        Optional<?> userById=userRepository.findById(id);
         if(userById.isPresent()){
-            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
+            return userById.get();
         }
         else {
             throw  new EntityNotFoundException("User not found.");
         }
     }
+
     public ApiResponse<Object> getUserByEmail(String email) {
-        Optional<User> userById=userRepository.findByEmail(email);
-        if(userById.isPresent()){
-            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",userById.get());
+        Optional<?> byEmail = userRepository.findByEmail(email);
+        if(byEmail.isPresent()){
+            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",byEmail.get());
         }
         else {
             throw  new EntityNotFoundException("User not found.");
         }
     }
-    private Class<?> getClassName(String projectionName) throws ClassNotFoundException {
-        return Class.forName(projectionPackage+""+projectionName);
+    public ApiResponse<Object> getUserByEmail(String email, String projectionName) {
+        Optional<?> byEmail = userRepository.findByEmail(email, getClassName(projectionName));
+        if(byEmail.isPresent()){
+            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",byEmail.get());
+        }
+        else {
+            throw  new EntityNotFoundException("User not found.");
+        }
+    }
+    private Class<?> getClassName(String projectionName) {
+        try {
+            return Class.forName(projectionPackage+""+projectionName);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(projectionName+" Class not found for get data from thr database.");
+        }
     }
 
 
-    public ApiResponse<Object> deleteUserById(Long id) throws ClassNotFoundException {
+    public Object deleteUserById(Long id) {
         Optional<?> userById = userRepository.findById(id, getClassName("UserProjectionDTO"));
         if(userById.isPresent()){
             userRepository.deleteById(id);
-            return new ApiResponse<Object>(HttpStatus.OK.value(), "User deleted successfully.",userById.get());
+            return userById.get();
         }
         else {
             throw  new EntityNotFoundException("User not found.");
         }
     }
 
-    public ApiResponse<RegisterUser> createUser(RegisterUser registerUser) {
+    public RegisterUser createUser(RegisterUser registerUser) {
         User user = util.convertObject(registerUser, User.class);
         Role role=new Role();
         role.setName(ERoles.ROLE_USER);
         role.setUser(user);
         user.setRoles(Collections.singletonList(role));
         user.setPassword(encoder.encode(user.getPassword()));
-        return new ApiResponse<RegisterUser>(HttpStatus.OK.value(), "User saved successfully.",util.convertObject(userRepository.save(user), RegisterUser.class));
-    }
-
-    public ApiResponse<RegisterUser> updateUser(User user) {
-        return new ApiResponse<RegisterUser>(HttpStatus.OK.value(), "User updated successfully.",util.convertObject(userRepository.save(user), RegisterUser.class));
+        return util.convertObject(userRepository.save(user), RegisterUser.class);
     }
 
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
@@ -123,17 +135,17 @@ public class UserService {
         }
     }
 
-    public ApiResponse<String> sendOtpToEmail(String email) throws MessagingException {
+    public String sendOtpToEmail(String email) {
         User userPersonal = (User) getUserByEmail(email).getData();
         String otp = util.generateOtp();
         if(util.sendOtp(email,userPersonal.getFirstName()+" "+userPersonal.getLastName(),otp)){
             userPersonal.setOtp(new Otp(otp,false,userPersonal));
             userRepository.save(userPersonal);
         }
-        return new ApiResponse<String>(HttpStatus.OK.value(), "Otp sent sucessfully");
+        return "Otp sent sucessfully";
     }
 
-    public ApiResponse<String> verifyOtpToEmail(String email, String otp) {
+    public String verifyOtpToEmail(String email, String otp) {
         User user = (User) getUserByEmail(email).getData();
         Otp otpDTO = user.getOtp();
         if(otpDTO == null)
@@ -155,10 +167,10 @@ public class UserService {
         user.setOtp(otpDTO);
         userRepository.save(user);
 
-        return new ApiResponse<String>(HttpStatus.OK.value(), "OTP verification successful");
+        return "OTP verification successful";
     }
 
-    public ApiResponse<String> changePassword(ChangePasswordDTO passwordDTO) {
+    public String changePassword(ChangePasswordDTO passwordDTO) {
         User userByEmail = (User)getUserByEmail(passwordDTO.getEmail()).getData();
         Otp otpDTO = userByEmail.getOtp();
 
@@ -179,8 +191,9 @@ public class UserService {
         userByEmail.setPassword(passwordEncoder.encode(passwordDTO.getPassword()));
         userByEmail.setOtp(null);
         userRepository.save(userByEmail);
-        return new ApiResponse<String>(HttpStatus.OK.value(), "Password updated successfully");
+        return "Password updated successfully";
     }
+
 
     public ApiResponse<Object> verifyJwtToken(String token) {
         jwtUtils.validateJwtToken(token);

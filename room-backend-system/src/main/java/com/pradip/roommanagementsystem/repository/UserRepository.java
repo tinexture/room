@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByEmail(String email);
 	<T> List<T> findAllBy(Class<T> projectionType);
 	<T> Optional<T> findById(Long id, Class<T> type);
+
+	<T> Optional<T> findByEmail(String email, Class<T> className);
 }
