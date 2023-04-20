@@ -1,6 +1,9 @@
 package com.pradip.roommanagementsystem.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pradip.roommanagementsystem.dto.*;
+import com.pradip.roommanagementsystem.dto.projection.ChangePasswordUser;
+import com.pradip.roommanagementsystem.dto.projection.UserDTO;
 import com.pradip.roommanagementsystem.entity.Address;
 import com.pradip.roommanagementsystem.entity.Otp;
 import com.pradip.roommanagementsystem.entity.Role;
@@ -93,10 +96,15 @@ public class UserService {
         }
     }
     private Class<?> getClassName(String projectionName) {
+
         try {
             return Class.forName(projectionPackage+""+projectionName);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(projectionName+" Class not found for get data from thr database.");
+            try {
+                return Class.forName(projectionPackage+"UserDTO");
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -136,6 +144,9 @@ public class UserService {
     }
 
     public String sendOtpToEmail(String email) {
+//        String changePasswordUser = new ObjectMapper().writeValueAsString((ChangePasswordUser) getUserByEmail(email, "ChangePasswordUser"));
+//        System.out.println(changePasswordUser);
+//        User userPersonal = util.convertObject((ChangePasswordUser) getUserByEmail(email, "ChangePasswordUser"), User.class);
         User userPersonal = (User) getUserByEmail(email);
         String otp = util.generateOtp();
         if(util.sendOtp(email,userPersonal.getFirstName()+" "+userPersonal.getLastName(),otp)){

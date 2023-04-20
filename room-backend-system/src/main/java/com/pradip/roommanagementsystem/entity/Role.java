@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pradip.roommanagementsystem.dto.ERoles;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "roles")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "user")
+@ToString(exclude = "user")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +22,8 @@ public class Role {
     @Column(length = 20)
     private ERoles name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name=" + name +
-                '}';
-    }
 }

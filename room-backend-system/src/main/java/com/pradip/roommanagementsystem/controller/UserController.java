@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<?>>> getAlUsers(@RequestParam("projection") String projectionName) {
+    public ResponseEntity<ApiResponse<List<?>>> getAlUsers(@RequestParam(required = false,value = "projection") String projectionName) {
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                         "Users fetched successfully.",userService.getAllUsers(projectionName))
         );
@@ -38,8 +38,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Object>> getUserById(
-            @RequestParam("projection") String projectionName,
-            @PathVariable Long id) throws ClassNotFoundException {
+            @RequestParam(required = false,value = "projection")  String projectionName,
+            @PathVariable Long id) {
         return ResponseEntity.ok(new ApiResponse<Object>(HttpStatus.OK.value(),
                 "User fetched successfully.",userService.getUserById(id, projectionName))
         );

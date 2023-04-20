@@ -1,9 +1,7 @@
 package com.pradip.roommanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "addresses")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "user")
+@ToString(exclude = "user")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
