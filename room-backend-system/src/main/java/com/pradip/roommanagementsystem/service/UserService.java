@@ -74,19 +74,19 @@ public class UserService {
         }
     }
 
-    public ApiResponse<Object> getUserByEmail(String email) {
+    public Object getUserByEmail(String email) {
         Optional<?> byEmail = userRepository.findByEmail(email);
         if(byEmail.isPresent()){
-            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",byEmail.get());
+            return byEmail.get();
         }
         else {
             throw  new EntityNotFoundException("User not found.");
         }
     }
-    public ApiResponse<Object> getUserByEmail(String email, String projectionName) {
+    public Object getUserByEmail(String email, String projectionName) {
         Optional<?> byEmail = userRepository.findByEmail(email, getClassName(projectionName));
         if(byEmail.isPresent()){
-            return new ApiResponse<Object>(HttpStatus.OK.value(), "User fetched successfully.",byEmail.get());
+            return byEmail.get();
         }
         else {
             throw  new EntityNotFoundException("User not found.");
@@ -136,7 +136,7 @@ public class UserService {
     }
 
     public String sendOtpToEmail(String email) {
-        User userPersonal = (User) getUserByEmail(email).getData();
+        User userPersonal = (User) getUserByEmail(email);
         String otp = util.generateOtp();
         if(util.sendOtp(email,userPersonal.getFirstName()+" "+userPersonal.getLastName(),otp)){
             userPersonal.setOtp(new Otp(otp,false,userPersonal));
@@ -146,7 +146,7 @@ public class UserService {
     }
 
     public String verifyOtpToEmail(String email, String otp) {
-        User user = (User) getUserByEmail(email).getData();
+        User user = (User) getUserByEmail(email);
         Otp otpDTO = user.getOtp();
         if(otpDTO == null)
             throw new EmailException("Please request a new one.");
@@ -171,7 +171,7 @@ public class UserService {
     }
 
     public String changePassword(ChangePasswordDTO passwordDTO) {
-        User userByEmail = (User)getUserByEmail(passwordDTO.getEmail()).getData();
+        User userByEmail = (User)getUserByEmail(passwordDTO.getEmail());
         Otp otpDTO = userByEmail.getOtp();
 
         if(otpDTO == null)
