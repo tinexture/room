@@ -12,7 +12,7 @@ public class UIController {
 
     @GetMapping("/")
     public String getIndex(){
-        return "redirect:/index.html";
+        return "index.html";
     }
 
     @GetMapping("/keep-alive")
