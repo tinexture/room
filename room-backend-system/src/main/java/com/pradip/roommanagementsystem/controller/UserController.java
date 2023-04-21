@@ -46,14 +46,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<RegisterUser>> createUser(@RequestBody RegisterUser user){
+    public ResponseEntity<ApiResponse<RegisterUser>> createUser(@Valid @RequestBody RegisterUser user){
         return ResponseEntity.ok(new ApiResponse<RegisterUser>(HttpStatus.OK.value(),
                 "User saved successfully.",userService.createUser(user))
         );
     }
 
     @PutMapping
-    public ResponseEntity<ApiResponse<RegisterUser>> updateUser(@RequestBody RegisterUser user){
+    public ResponseEntity<ApiResponse<RegisterUser>> updateUser(@Valid @RequestBody RegisterUser user){
         return ResponseEntity.ok(new ApiResponse<RegisterUser>(HttpStatus.OK.value(),
                 "User updated successfully.",userService.createUser(user))
         );
@@ -67,7 +67,6 @@ public class UserController {
     }
 
     @GetMapping("/send-otp/{email}")
-    @CrossOrigin(origins = "*")
     public ResponseEntity<ApiResponse<String>> sendEmail(@PathVariable String email)  {
         return ResponseEntity.ok(new ApiResponse<String>(HttpStatus.OK.value(),
                 userService.sendOtpToEmail(email))

@@ -27,6 +27,12 @@ public class GlobalExceptionHandler {
                 .body("Access Denied: " + ex.getMessage());
     }
 
+    @ExceptionHandler(UserAlreadyExistlException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistlException(UserAlreadyExistlException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(),  ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(SmtpException.class)
     public ResponseEntity<ErrorResponse> handleSmtpException(SmtpException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),  ex.getMessage());
@@ -87,9 +93,9 @@ public class GlobalExceptionHandler {
 
 
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
-//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
-//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

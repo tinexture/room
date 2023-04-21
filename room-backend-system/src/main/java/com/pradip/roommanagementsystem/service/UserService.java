@@ -10,6 +10,7 @@ import com.pradip.roommanagementsystem.entity.Role;
 import com.pradip.roommanagementsystem.entity.User;
 import com.pradip.roommanagementsystem.exception.EmailException;
 import com.pradip.roommanagementsystem.exception.UnauthorizedException;
+import com.pradip.roommanagementsystem.exception.UserAlreadyExistlException;
 import com.pradip.roommanagementsystem.repository.UserRepository;
 import com.pradip.roommanagementsystem.security.dto.CustomUserDetails;
 import com.pradip.roommanagementsystem.security.dto.LoginRequest;
@@ -121,6 +122,8 @@ public class UserService {
     }
 
     public RegisterUser createUser(RegisterUser registerUser) {
+        if(userRepository.existsByEmail(registerUser.getEmail()))
+            throw new UserAlreadyExistlException("User already register with us.");
         User user = util.convertObject(registerUser, User.class);
         Role role=new Role();
         role.setName(ERoles.ROLE_USER);

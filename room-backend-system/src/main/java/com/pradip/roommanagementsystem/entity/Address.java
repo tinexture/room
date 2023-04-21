@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "addresses")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "user")
-@ToString(exclude = "user")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

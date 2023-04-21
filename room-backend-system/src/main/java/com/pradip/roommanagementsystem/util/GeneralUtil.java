@@ -1,6 +1,7 @@
 package com.pradip.roommanagementsystem.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.pradip.roommanagementsystem.exception.SmtpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,8 +54,9 @@ public class GeneralUtil {
         }
     }
 
-    public <T, U> U convertObject(T object, Class<U> clazz) {
-        return mapper.convertValue(object, clazz);
+    public <T, U> U convertObject(T sourceObject, Class<U> destinationObjectType) {
+//        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, destinationObjectType.);
+        return mapper.convertValue(sourceObject, destinationObjectType);
     }
 
 
