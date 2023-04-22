@@ -37,7 +37,14 @@ public class WebSecurityConfig {
             "/keep-alive",
             "/user/verify-otp/**",
             "/user/send-otp/**",
-            "/verify-token"
+            "/verify-token",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/v2/api-docs/**",
+            "/webjars**",
+            "/webjars/springfox-swagger-ui/**",
+            "/csrf",
+            "/data/**"
     };
     @Autowired
     @Lazy
