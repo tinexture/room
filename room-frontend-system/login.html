@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="asstes/css/common-login-registration.css">
     <link rel="stylesheet" href="asstes/css/login.css">
     <script src="asstes/js/jquery-3.6.4.js"></script>
+    <script src="asstes/js/variable.js"></script>
     <script src="asstes/js/comman.js"></script>
     <script src="asstes/js/validationFunction.js"></script>
     
@@ -29,14 +30,14 @@
                 <h2 class="text-center">Login</h2>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email Address</label>
+                <label for="email">Email Address</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                     placeholder="Enter Email" name="email"
                     onblur="borderErrorColor(emailVlid($('#email').val(), $('#email-err')), $('#email'))">
                 <p class="error" id="email-err">Email Error</p>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
+                <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" placeholder="Password" name="password"
                     onblur=" borderErrorColor(passVlid($('#password').val(),$('#password-err')), $('#password'))">
                 <p class="error " id="password-err">Email Error</p>

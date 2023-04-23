@@ -1,35 +1,50 @@
 // const apiUrl = 'https://roommates-782r.onrender.com';
 $('#cover-spin').show();
 
+function showToast(message, type) {
+    const $newDiv = $('<div>' + message + '</div>');   // create a div element
+    $newDiv.addClass('toast-message');    // set class for the div element
+    $('#api-responce').append($newDiv);    // append the div element to the body of the page
+    $newDiv.css("background-color", type === 'success' ? '#4CAF50' : '#F44336'); // set new div background color
+    setTimeout(() => {
+        $newDiv.css("opacity", "0.5");
+    }, 3000);
+    setTimeout(() => {
+        $newDiv.css("display", "none");
+
+    }, 3000);
+}
+
+
 function validateJwtToken(accessToken) {
     try {
-        console.log("verify function is called");
         $.ajax({
-            url: apiUrl + "/verify-token",
+            url: backendServerUrl + "/verify-token",
             method: "POST",
-            async: false,
             data: JSON.stringify({
                 "jwt": window.sessionStorage.getItem("token")
-                // "jwt": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF2ZGFzYW5kaXBAZ21haWwuY29tIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWQiOjgzLCJmdWxsbmFtZSI6IlNhbmRpcCBDaGF2ZGEiLCJsb2NrZWQiOmZhbHNlLCJleHAiOjE2ODEyMzk2NjUsImlhdCI6MTY4MTIzNjA2NSwiZW5hYmxlZCI6dHJ1ZX0.xctjCLOe6LaStBDKj2GsCrdWdhbDIGmhmGd_ET-MdEVeqsdTt7O-Tk67ZTAnY6-2ymqqVPzw71COeywdHQMceQ"
             }),
             headers: {
                 'Content-Type': 'application/json'
             },
             success: function (responce) {
-                console.log("API responce", responce);
-                alert("user tiken is valid");
                 showToast(responce.message, 'success');
+                return true;
             },
             error: function (xhr, status, error) {
                 var errorMessage = JSON.parse(xhr.responseText);
-                console.log(errorMessage.message);
-                alert("user tiken is not valid");
+                window.sessionStorage.removeItem("token");
                 showToast(errorMessage.message, 'error');
+                throw new Error("hello");
+                return false;
             }
+
         });
         return true;
+        console.log("after ajax");
     }
     catch (error) {
+        console.log("new "+error);
         return false;
     }
 }
@@ -37,7 +52,9 @@ var accessToken = window.sessionStorage.getItem("token"); // get token and store
 var sessionCheck = false;
 if (accessToken != null) { // accessToken find then this block execute
     if (validateJwtToken(accessToken)) {
-        sessionCheck = true;
+        if(window.sessionStorage.getItem("token") != null){
+            sessionCheck = true;
+        }
     }
 }
 var page_url = window.location.href;
@@ -56,7 +73,6 @@ else {
         extractedPath == "registration.html" ||
         extractedPath == "forgote-pass.html") {
         window.location.href = "homePage.html";
-        console.log("token not valid");
     }
 }
 

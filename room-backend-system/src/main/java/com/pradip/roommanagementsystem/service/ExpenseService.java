@@ -5,6 +5,7 @@ import com.pradip.roommanagementsystem.dto.projection.ExpenseProjection;
 import com.pradip.roommanagementsystem.entity.Expense;
 import com.pradip.roommanagementsystem.exception.ResourceNotFoundException;
 import com.pradip.roommanagementsystem.repository.ExpenseRepository;
+import com.pradip.roommanagementsystem.repository.UserRepository;
 import com.pradip.roommanagementsystem.util.GeneralUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ExpenseService {
     private ExpenseRepository expenseRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private GeneralUtil generalUtil;
 
     public List<ExpenseProjection> getAllExpenses() {
@@ -32,7 +36,7 @@ public class ExpenseService {
 
 
     public Expense  addExpense(ExpenseDTO expenseDTO) {
-        if (!expenseRepository.existsByUserId(expenseDTO.getUser().getId()))
+        if (!userRepository.existsById(expenseDTO.getUser().getId()))
             throw new ResourceNotFoundException("User not exist.");
         return expenseRepository.save(generalUtil.convertObject(expenseDTO, Expense.class));
     }

@@ -59,6 +59,7 @@ public class UserService {
 
     public List<?> getAllUsers(String projectionName) {
 //        List<User> allBy = userRepository.findAll();
+        System.out.println(projectionName);
                 List<?> allBy = userRepository.findAllBy(getClassName(projectionName));
         if(allBy == null || allBy.isEmpty()){
             throw  new EntityNotFoundException("User not found.");

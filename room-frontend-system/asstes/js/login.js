@@ -1,4 +1,3 @@
-const apiUrl = 'https://roommates-782r.onrender.com';
 $(document).ready(function () {
     function callLoginApi() {
         authenticate($("#email").val(), $("#password").val());
@@ -6,7 +5,7 @@ $(document).ready(function () {
     function authenticate(email, password) {
         $('#cover-spin').show();
         $.ajax({
-            url: apiUrl + "/authenticate",
+            url: backendServerUrl + "/authenticate",
             method: "POST",
             data: JSON.stringify({
                 "email": email,

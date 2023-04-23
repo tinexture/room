@@ -17,7 +17,7 @@ function callSendOtp() {
     // $('#cover-spin').show();
 
     $.ajax({
-        url: apiUrl + "/user/send-otp/" + $('#fEmail').val(),
+        url: backendServerUrl + "/user/send-otp/" + $('#fEmail').val(),
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

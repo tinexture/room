@@ -49,7 +49,7 @@ public class ExpenseController {
                                                            @PathVariable Long userId){
         expenseDTO.setUser(new UserExpenseDTO(userId));
         return ResponseEntity.ok(new ApiResponse<Expense>(HttpStatus.OK.value(),
-                "User saved successfully.", expenseService.addExpense(expenseDTO))
+                "Expense saved successfully.", expenseService.addExpense(expenseDTO))
         );
     }
 
