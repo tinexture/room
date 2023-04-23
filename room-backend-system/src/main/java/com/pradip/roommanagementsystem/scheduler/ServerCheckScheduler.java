@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 public class ServerCheckScheduler {
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${server.url}")
-    private String apiUrl; // replace with your API URL
+//     @Value("${server.url}")
+    private String apiUrl="https://theroom-backend.onrender.com"; // replace with your API URL
 
-    //@Scheduled(fixedDelay = 600000) // 10 minutes in milliseconds
+    @Scheduled(fixedDelay = 600000) // 10 minutes in milliseconds
     public void callApi() {
         String response = restTemplate.getForObject(apiUrl+"/keep-alive", String.class);
         System.out.println("\n=> Response from server : "+response+".");
