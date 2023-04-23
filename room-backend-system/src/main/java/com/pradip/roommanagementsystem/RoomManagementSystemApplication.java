@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-//@EnableScheduling
+@EnableScheduling
 public class RoomManagementSystemApplication {
 
 	public static void main(String[] args) {
