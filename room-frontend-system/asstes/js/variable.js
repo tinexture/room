@@ -1,3 +1,3 @@
 //const backendServerUrl = 'https://roommates-782r.onrender.com';
 //
-const backendServerUrl="http://localhost:4564";
+const backendServerUrl="https://room-backend.onrender.com";
